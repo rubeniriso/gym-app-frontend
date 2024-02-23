@@ -1,0 +1,13 @@
+name: Prettier Code Formatter
+
+on: [push]
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Prettier
+      run: |
+        npm install
+        npx prettier --write .
