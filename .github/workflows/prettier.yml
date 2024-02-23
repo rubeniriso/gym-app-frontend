@@ -6,25 +6,25 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-    - name: Install Dependencies
-      run: npm install
-    - name: Lint
-      run: npx eslint .
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install Dependencies
+        run: npm install
+      - name: Lint
+        run: npx eslint .
 
   prettier:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '14'
-    - name: Install Dependencies
-      run: npm install
-    - name: Check Code Format
-      run: npx prettier --check .
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+      - name: Install Dependencies
+        run: npm install
+      - name: Check Code Format
+        run: npx prettier --check .
