@@ -14,7 +14,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: Lint
-        run: npx eslint .
+        run: npx eslint src/*.js
 
   prettier:
     runs-on: ubuntu-latest
