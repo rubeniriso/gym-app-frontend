@@ -1,17 +1,16 @@
-import React from "react";
+import { getAllUserRoutines } from "@/model/Routine.model";
 import { Routine } from "@/app/types/routine";
-
-interface RoutinesContainerProps {
-  routines?: Routine[];
-}
-
-const RoutinesContainer = ({ routines }: RoutinesContainerProps) => {
+interface RoutineThumbnailProps {}
+export const RoutineThumbnail = async ({}: RoutineThumbnailProps) => {
   return (
-    <div className="">
-      {routines &&
-        routines.map((routine) => <div key={routine.routine_id}>{}</div>)}
+    <div>
+      {data.map((routine: Routine) => (
+        <li key={routine.name}>
+          <h2>{routine.name}</h2>
+          <p>{routine.description}</p>
+          <p>Week ID: {routine.week_id}</p>
+        </li>
+      ))}
     </div>
   );
 };
-
-export default RoutinesContainer;
