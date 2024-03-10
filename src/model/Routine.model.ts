@@ -1,10 +1,10 @@
-// Session.model.js
+// Routine.model.js
 
 // Define the function to call the backend function
-async function getAllSessions() {
+async function getAllUserRoutines(userId: number) {
   try {
     const response = await fetch(
-      "http://localhost:5002/api/v1/sessions/get-all"
+      `http://localhost:5002/api/v1/user/${userId}/routines`
     );
     const data = await response.json();
     return data;
@@ -15,4 +15,4 @@ async function getAllSessions() {
 }
 
 // Export the function
-export { getAllSessions };
+export { getAllUserRoutines };
