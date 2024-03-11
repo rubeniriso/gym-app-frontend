@@ -1,5 +1,5 @@
 import { getAllSessions } from "@/model/Session.model";
-import { Session } from "@/app/types/session";
+import { Session } from "@/types/session";
 
 export const SessionComponent = async () => {
   const data = await getAllSessions();

@@ -1,4 +1,4 @@
-import { Routine } from "@/app/types/routine";
+import { Routine } from "@/types/routine";
 import Image from "next/image";
 interface RoutineThumbnailProps {
   routine: Routine;

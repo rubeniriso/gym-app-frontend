@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import RoutinesContainer from "../components/Routines/RoutinesContainer";
+import RoutinesContainer from "../../components/ui/routines/RoutinesContainer";
 import { useRouter } from "next/navigation";
-import { Routine } from "../types/routine";
+import { Routine } from "../../types/routine";
 import { getAllUserRoutines } from "@/model/Routine.model";
-import RoutineThumbnail from "../components/Routines/RoutineThumbnail";
+import RoutineThumbnail from "../../components/ui/routines/RoutineThumbnail";
 
 const Page = async () => {
   //const router = useRouter();
