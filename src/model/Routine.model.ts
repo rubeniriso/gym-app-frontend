@@ -1,5 +1,3 @@
-// Routine.model.js
-
 // Define the function to call the backend function
 async function getAllUserRoutines(userId: number) {
   try {

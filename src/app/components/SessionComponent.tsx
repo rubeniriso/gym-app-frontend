@@ -1,13 +1,14 @@
 import { getAllSessions } from "@/model/Session.model";
+import { Session } from "@/app/types/session";
 
-export const ServerComponent = async () => {
+export const SessionComponent = async () => {
   const data = await getAllSessions();
   console.log(data);
   return (
     <div>
       <h1>Session Data:</h1>
       <ul>
-        {data.map((session: any) => (
+        {data.map((session: Session) => (
           <li key={session.session_id}>
             <h2>{session.name}</h2>
             <p>{session.description}</p>

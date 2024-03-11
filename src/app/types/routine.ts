@@ -10,6 +10,8 @@ export type Routine = {
   description: string;
   /** The Icon's URL associated to the Routine type. */
   iconUrl: string;
+  /** The Icon's URL associated to the Routine type. */
+  iconAltText: string;
   /** The associated Routine type. */
   routineType: string;
 };

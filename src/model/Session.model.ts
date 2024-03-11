@@ -1,6 +1,3 @@
-// Session.model.js
-
-// Define the function to call the backend function
 async function getAllSessions() {
   try {
     const response = await fetch(
