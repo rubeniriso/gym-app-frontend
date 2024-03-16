@@ -1,7 +1,7 @@
 import React from "react";
 
-const RoutineWrapper = () => {
+const RoutineContainer = () => {
   return <div>RoutineWrapper</div>;
 };
 
-export default RoutineWrapper;
+export default RoutineContainer;

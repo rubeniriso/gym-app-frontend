@@ -1,18 +1,21 @@
 "use client";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import ModalForm from "../form/ModalForm";
 import RoutineFormContent from "./RoutineFormContent";
 import { NewRoutineData } from "@/types/data/NewRoutineData";
+import { RoutineType } from "@/types/routineType";
+interface AddRoutineThumbnailProps {
+  routineTypes: RoutineType[]; // ReactNode represents any valid React child: JSX, string, array, etc.
+}
 
-const AddRoutineThumbnail = () => {
+const AddRoutineThumbnail = ({ routineTypes }: AddRoutineThumbnailProps) => {
   const [isNewRoutineModalOpen, setIsNewRoutineModalOpen] =
     useState<boolean>(false);
   const [newRoutineFormData, setNewRoutineFormData] =
     useState<NewRoutineData | null>(null);
 
   const handleOpenNewRoutineModal = () => {
-    console.log("perico");
     setIsNewRoutineModalOpen(true);
   };
 
@@ -36,7 +39,10 @@ const AddRoutineThumbnail = () => {
         onClose={handleCloseNewRoutineModal}
         hasCloseBtn={true}
       >
-        <RoutineFormContent handleFormSubmit={handleFormSubmit} />
+        <RoutineFormContent
+          handleFormSubmit={handleFormSubmit}
+          routineTypes={routineTypes}
+        />
       </ModalForm>
     </>
   );
