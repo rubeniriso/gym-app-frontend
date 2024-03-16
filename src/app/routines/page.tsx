@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import RoutinesContainer from "../../components/ui/routines/RoutinesContainer";
 import { Routine } from "../../types/routine";
 import { getAllUserRoutines } from "@/model/Routine.model";

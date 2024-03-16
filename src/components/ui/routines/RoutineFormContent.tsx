@@ -9,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -18,7 +19,7 @@ const formSchema = z.object({
   username: z.string().min(2).max(50),
 });
 
-const RoutineFormContent = () => {
+const RoutineFormContent = ({ handleFormSubmit }: any) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,9 +41,9 @@ const RoutineFormContent = () => {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Routine name</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Weightlifting rt 1" {...field} />
               </FormControl>
               <FormDescription>
                 This is your public display name.
@@ -51,6 +52,9 @@ const RoutineFormContent = () => {
             </FormItem>
           )}
         />
+        <Button type="submit" onSubmit={handleFormSubmit}>
+          Submit
+        </Button>
       </form>
     </Form>
   );
