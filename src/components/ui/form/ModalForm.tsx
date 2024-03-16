@@ -1,5 +1,5 @@
 "use client";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 interface ModalProps {
   isOpen: boolean;
@@ -31,7 +31,7 @@ const ModalForm = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   return (
     <dialog ref={modalRef}>
       {hasCloseBtn && (
-        <button className="modal-close-btn">
+        <button className="modal-close-btn" onClick={handleCloseModal}>
           <CloseIcon />
         </button>
       )}

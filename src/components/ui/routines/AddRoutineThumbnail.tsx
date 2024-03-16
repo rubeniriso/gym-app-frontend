@@ -1,16 +1,13 @@
 "use client";
-import { Routine } from "@/types/routine";
-import Image from "next/image";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react";
 import ModalForm from "../form/ModalForm";
 import RoutineFormContent from "./RoutineFormContent";
 
-const AddRoutineThumbnail = async () => {
+const AddRoutineThumbnail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenRoutineForm = () => {
+    console.log("hola");
     setIsModalOpen(true);
   };
   return (
