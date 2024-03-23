@@ -23,49 +23,46 @@ import {
   SelectValue,
 } from "../select";
 import { RoutineType } from "@/types/routineType";
-
+import { DialogFooter } from "../dialog";
+import { createRoutine } from "@/model/Routine.model";
+import { newRoutineData } from "@/types/data/newRoutineData";
 const formSchema = z.object({
-  routineName: z
-    .string()
-    .trim()
-    .min(1, { message: "The routine must have a name" }),
+  name: z.string().trim().min(1, { message: "The routine must have a name" }),
   description: z.string().optional(),
-  routineType: z.number(),
+  routinetype_id: z.string(),
 });
 interface RoutineFormContentProps {
   routineTypes: RoutineType[];
-  handleFormSubmit: any;
 }
 
-const RoutineFormContent = ({
-  handleFormSubmit,
-  routineTypes,
-}: RoutineFormContentProps) => {
+const RoutineFormContent = ({ routineTypes }: RoutineFormContentProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      routineName: "",
+      name: "",
       description: "",
-      routineType: 0,
+      routinetype_id: "0",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(formData: FormData) {
+    console.log(formData.get("routinetype_id"));
+    createRoutine({
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      routinetype_id: formData.get("routinetype_id") as string,
+      // TODO: Change User_id from context
+      user_id: 1,
+    });
   }
   return (
-    <div className="z-20 relative px-8 py-6 lg:min-w-[500px] bg-slate-100 bg-opacity-100">
-      <h1 className="w-full text-center font-bold uppercase text-xl pb-4">
-        New Routine
-      </h1>
+    <>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <form action={onSubmit} className="space-y-8">
           <FormField
             control={form.control}
-            name="routineName"
+            name="name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Routine name</FormLabel>
@@ -89,18 +86,15 @@ const RoutineFormContent = ({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
-            name="routineType"
+            name="routinetype_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Routine type</FormLabel>
                 <Select
-                  className="z-[100]"
-                  defaultValue={field.value.toString()}
+                  defaultValue={field.value}
                   onValueChange={field.onChange}
-                  value={field.value.toString()}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -123,14 +117,14 @@ const RoutineFormContent = ({
               </FormItem>
             )}
           />
-          <div className="flex flex-row items-center justify-center">
-            <Button className="" type="submit" onSubmit={handleFormSubmit}>
+          <div className="flex flex-col items-center justify-center w-full">
+            <Button className="" type="submit">
               Submit
             </Button>
           </div>
         </form>
       </Form>
-    </div>
+    </>
   );
 };
 

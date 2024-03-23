@@ -1,6 +1,18 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../dialog";
 import CloseIcon from "@mui/icons-material/Close";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Button } from "../button";
+
 interface ModalProps {
   isOpen: boolean;
   hasCloseBtn?: boolean;
@@ -39,32 +51,14 @@ const ModalForm = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
   }, [isModalOpen]);
 
   return (
-    <>
-      <dialog
-        className=""
-        ref={modalRef}
-        onKeyDown={handleKeyDown}
-        tabIndex={0}
-      >
-        {hasCloseBtn && (
-          <button
-            className="absolute right-6 z-30 top-6 modal-close-btn"
-            onClick={handleCloseModal}
-          >
-            <CloseIcon />
-          </button>
-        )}
-        {children}
-        <div className="w-screen h-screen fixed top-0 left-0 z-0 bg-black bg-opacity-80">
-          <button
-            className="absolute right-4 z-40 top-4 modal-close-btn text-white"
-            onClick={handleCloseModal}
-          >
-            <CloseIcon style={{ fontSize: 50 }} />
-          </button>
-        </div>
-      </dialog>
-    </>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="flex flex-row items-center justify-center w-[400px] h-[400px] bg-slate-200">
+          <AddCircleOutlineIcon width={400} height={400} />
+        </button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">{children}</DialogContent>
+    </Dialog>
   );
 };
 

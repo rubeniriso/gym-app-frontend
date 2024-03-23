@@ -1,4 +1,6 @@
+import { newRoutineData } from "@/types/data/newRoutineData";
 import { Routine } from "@/types/routine";
+import { revalidatePath } from "next/cache";
 
 // Define the function to call the backend function
 async function getAllUserRoutines(userId: number) {
@@ -14,22 +16,27 @@ async function getAllUserRoutines(userId: number) {
   }
 }
 
-async function createRoutine(userId: number, routine: Routine) {
+async function createRoutine(routine: newRoutineData) {
   try {
-    const response = await fetch(
-      `http://localhost:5002/api/v1/routines/user/${userId}`,
+    console.log(routine);
+    /*const response = await fetch(
+      `http://localhost:5002/api/v1/routines/create`,
       {
         method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(routine),
       }
     );
     const data = await response.json();
-    return data;
+    revalidatePath("routines");*/
   } catch (error) {
+    console.log(error);
     console.error("Error fetching session data:", error);
     throw error;
   }
 }
 
 // Export the function
-export { getAllUserRoutines };
+export { getAllUserRoutines, createRoutine };
