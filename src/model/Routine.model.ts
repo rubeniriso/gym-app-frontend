@@ -1,10 +1,13 @@
+"use server";
 import { newRoutineData } from "@/types/data/newRoutineData";
 import { Routine } from "@/types/routine";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 
 // Define the function to call the backend function
 async function getAllUserRoutines(userId: number) {
   try {
+    console.log(`http://localhost:5002/api/v1/routines/user/${userId}`);
     const response = await fetch(
       `http://localhost:5002/api/v1/routines/user/${userId}`
     );
@@ -16,11 +19,13 @@ async function getAllUserRoutines(userId: number) {
   }
 }
 
-async function createRoutine(routine: newRoutineData) {
+async function createRoutine(
+  user_id: number,
+  routine: z.infer<typeof newRoutineData>
+) {
   try {
-    console.log(routine);
-    /*const response = await fetch(
-      `http://localhost:5002/api/v1/routines/create`,
+    const response = await fetch(
+      `http://localhost:5002/api/v1/routines/create/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -29,8 +34,8 @@ async function createRoutine(routine: newRoutineData) {
         body: JSON.stringify(routine),
       }
     );
-    const data = await response.json();
-    revalidatePath("routines");*/
+    await response.json();
+    revalidatePath("/routines");
   } catch (error) {
     console.log(error);
     console.error("Error fetching session data:", error);

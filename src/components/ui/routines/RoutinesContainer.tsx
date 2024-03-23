@@ -6,7 +6,11 @@ interface RoutinesContainerProps {
   children: React.ReactNode;
 }
 const RoutinesContainer = ({ children }: RoutinesContainerProps) => {
-  return <div className="flex flex-row gap-4">{children}</div>;
+  return (
+    <div className="flex flex-start flex-wrap gap-4 mx-5 my-5 flex-row">
+      {children}
+    </div>
+  );
 };
 
 export default RoutinesContainer;

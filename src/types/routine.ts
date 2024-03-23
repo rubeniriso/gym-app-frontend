@@ -11,7 +11,7 @@ export type Routine = {
   /** The Icon's URL associated to the Routine type. */
   icon_url: string;
   /** The Icon's URL associated to the Routine type. */
-  iconAltText: string;
+  icon_alt_text: string;
   /** The associated Routine type. */
   routineType: string;
 };

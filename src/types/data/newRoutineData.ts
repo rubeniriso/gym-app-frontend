@@ -1,13 +1,7 @@
-/**
- * Represents a Routine
- */
-export type newRoutineData = {
-  /** name of the Routine */
-  name: string;
-  /** Description of the Routine */
-  description?: string;
-  /** The associated Routine type. */
-  routinetype_id: string;
-  /** The User */
-  user_id: number;
-};
+import { z } from "zod";
+
+export const newRoutineData = z.object({
+  name: z.string().trim().min(1, { message: "The routine must have a name" }),
+  description: z.string().optional(),
+  routinetype_id: z.string(),
+});

@@ -23,21 +23,19 @@ import {
   SelectValue,
 } from "../select";
 import { RoutineType } from "@/types/routineType";
-import { DialogFooter } from "../dialog";
 import { createRoutine } from "@/model/Routine.model";
 import { newRoutineData } from "@/types/data/newRoutineData";
-const formSchema = z.object({
-  name: z.string().trim().min(1, { message: "The routine must have a name" }),
-  description: z.string().optional(),
-  routinetype_id: z.string(),
-});
 interface RoutineFormContentProps {
   routineTypes: RoutineType[];
+  submitFunction: Function;
 }
 
-const RoutineFormContent = ({ routineTypes }: RoutineFormContentProps) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+const RoutineFormContent = ({
+  routineTypes,
+  submitFunction,
+}: RoutineFormContentProps) => {
+  const form = useForm<z.infer<typeof newRoutineData>>({
+    resolver: zodResolver(newRoutineData),
     defaultValues: {
       name: "",
       description: "",
@@ -46,20 +44,13 @@ const RoutineFormContent = ({ routineTypes }: RoutineFormContentProps) => {
   });
 
   // 2. Define a submit handler.
-  async function onSubmit(formData: FormData) {
-    console.log(formData.get("routinetype_id"));
-    createRoutine({
-      name: formData.get("name") as string,
-      description: formData.get("description") as string,
-      routinetype_id: formData.get("routinetype_id") as string,
-      // TODO: Change User_id from context
-      user_id: 1,
-    });
+  function onSubmit(values: z.infer<typeof newRoutineData>) {
+    submitFunction(1, values);
   }
   return (
     <>
       <Form {...form}>
-        <form action={onSubmit} className="space-y-8">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="name"
@@ -86,15 +77,17 @@ const RoutineFormContent = ({ routineTypes }: RoutineFormContentProps) => {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="routinetype_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Routine type</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <Select
-                  defaultValue={field.value}
+                  defaultValue={field.value.toString()}
                   onValueChange={field.onChange}
+                  value={field.value.toString()}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -112,12 +105,10 @@ const RoutineFormContent = ({ routineTypes }: RoutineFormContentProps) => {
                     ))}
                   </SelectContent>
                 </Select>
-
-                <FormMessage />
               </FormItem>
             )}
           />
-          <div className="flex flex-col items-center justify-center w-full">
+          <div className="flex flex-row items-center justify-center">
             <Button className="" type="submit">
               Submit
             </Button>

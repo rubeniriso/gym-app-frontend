@@ -7,6 +7,7 @@ import { getUserActiveRoutine } from "@/model/User.model";
 import AddRoutineThumbnail from "@/components/ui/routines/AddRoutineThumbnail";
 import { RoutineType } from "@/types/routineType";
 import { getAllRoutineTypes } from "@/model/RoutineType.model";
+import RoutineCard from "@/components/ui/routines/RoutineCard";
 
 const Page = async () => {
   const routines: Routine[] = await getAllUserRoutines(1);
@@ -17,10 +18,11 @@ const Page = async () => {
     <RoutinesContainer>
       {routines &&
         routines.map((routine: Routine, index) => (
-          <RoutineThumbnail
+          <RoutineCard
             key={index}
             routine={routine}
             isActive={activeRoutine == routine.routine_id}
+            routineTypes={routineTypes}
           />
         ))}
       <AddRoutineThumbnail routineTypes={routineTypes} />

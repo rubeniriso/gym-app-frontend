@@ -18,9 +18,16 @@ interface ModalProps {
   hasCloseBtn?: boolean;
   onClose?: () => void;
   children: React.ReactNode;
+  dialogTrigger: React.ReactNode;
 }
 
-const ModalForm = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
+const ModalForm = ({
+  isOpen,
+  hasCloseBtn,
+  onClose,
+  children,
+  dialogTrigger,
+}: ModalProps) => {
   const modalRef = useRef<HTMLDialogElement | null>(null);
   const [isModalOpen, setModalOpen] = useState(isOpen);
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
@@ -52,11 +59,7 @@ const ModalForm = ({ isOpen, hasCloseBtn, onClose, children }: ModalProps) => {
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <button className="flex flex-row items-center justify-center w-[400px] h-[400px] bg-slate-200">
-          <AddCircleOutlineIcon width={400} height={400} />
-        </button>
-      </DialogTrigger>
+      <DialogTrigger asChild>{dialogTrigger}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">{children}</DialogContent>
     </Dialog>
   );
