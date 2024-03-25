@@ -1,25 +1,12 @@
 "use client";
-import { Routine } from "@/types/routine";
-import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { activateUserRoutine } from "@/model/User.model";
-import { Button } from "../button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../dropdown-menu";
-import { DotsHorizontalIcon } from "@radix-ui/react-icons";
-import EditRoutineButton from "./EditRoutineButton";
 import { RoutineType } from "@/types/routineType";
+import RoutineDropdownMenu from "./dropdown/RoutineDropdownMenu";
 interface RoutineInfoBoxProps {
   name: string;
   description: string;
+  routine_id: string;
   isActive: boolean;
   handleChange: () => void;
   routineTypes: RoutineType[];
@@ -27,6 +14,7 @@ interface RoutineInfoBoxProps {
 const RoutineInfoBox = async ({
   name,
   description,
+  routine_id,
   isActive,
   handleChange,
   routineTypes,
@@ -39,17 +27,10 @@ const RoutineInfoBox = async ({
           <p className="overflow-x-clip">{description}</p>
         </div>
         <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger>
-              {" "}
-              <DotsHorizontalIcon />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Routine</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <EditRoutineButton routineTypes={routineTypes} />
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <RoutineDropdownMenu
+            routine_id={routine_id}
+            routineTypes={routineTypes}
+          />
         </div>
       </div>
       <div>

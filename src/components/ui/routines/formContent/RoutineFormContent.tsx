@@ -21,34 +21,41 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../select";
+} from "@/components/ui/select";
 import { RoutineType } from "@/types/routineType";
 import { createRoutine } from "@/model/Routine.model";
 import { newRoutineData } from "@/types/data/newRoutineData";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { useDialog } from "@/components/hooks/useDialog";
 interface RoutineFormContentProps {
   routineTypes: RoutineType[];
   submitFunction: Function;
+  title: string;
+  submit_id: string;
 }
 
 const RoutineFormContent = ({
   routineTypes,
   submitFunction,
+  title,
+  submit_id,
 }: RoutineFormContentProps) => {
   const form = useForm<z.infer<typeof newRoutineData>>({
     resolver: zodResolver(newRoutineData),
     defaultValues: {
       name: "",
       description: "",
-      routinetype_id: "0",
+      routinetype_id: "",
     },
   });
-
-  // 2. Define a submit handler.
+  const { onClose } = useDialog();
   function onSubmit(values: z.infer<typeof newRoutineData>) {
-    submitFunction(1, values);
+    submitFunction(submit_id, values);
+    onClose();
   }
   return (
     <>
+      <h1 className="text-center font-bold text-md">{title}</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
@@ -77,7 +84,6 @@ const RoutineFormContent = ({
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="routinetype_id"
@@ -105,13 +111,16 @@ const RoutineFormContent = ({
                     ))}
                   </SelectContent>
                 </Select>
+                <FormMessage />
               </FormItem>
             )}
           />
           <div className="flex flex-row items-center justify-center">
-            <Button className="" type="submit">
-              Submit
-            </Button>
+            <DialogFooter>
+              <Button className="" type="submit">
+                Submit
+              </Button>
+            </DialogFooter>
           </div>
         </form>
       </Form>

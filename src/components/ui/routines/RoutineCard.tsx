@@ -35,6 +35,7 @@ const RoutineCard = async ({
           isActive={isActive}
           handleChange={handleChange}
           routineTypes={routineTypes}
+          routine_id={routine.routine_id.toString()}
         />
       </a>
     </div>

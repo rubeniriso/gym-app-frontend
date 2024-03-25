@@ -14,7 +14,15 @@ const RoutineThumbnail = async ({
   icon_url,
   icon_alt_text,
 }: RoutineThumbnailProps) => {
-  return <Image alt={icon_alt_text} src={icon_url} width={300} height={300} />;
+  return (
+    <Image
+      className="rounded-xl"
+      alt={icon_alt_text}
+      src={icon_url}
+      width={300}
+      height={300}
+    />
+  );
 };
 
 export default RoutineThumbnail;
