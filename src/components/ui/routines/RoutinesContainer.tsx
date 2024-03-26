@@ -8,8 +8,9 @@ interface RoutinesContainerProps {
 }
 const RoutinesContainer = ({ children }: RoutinesContainerProps) => {
   return (
-    <div className="flex flex-start flex-wrap gap-4 mx-5 my-5 flex-row">
-      {children}
+    <div className="flex justify-center  my-5 flex-row">
+      <div className="w-[75%] flex flex-wrap gap-8">{children}</div>
+
       <DialogComponent />
     </div>
   );
