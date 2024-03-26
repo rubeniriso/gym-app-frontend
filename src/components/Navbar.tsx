@@ -3,14 +3,16 @@ import React from "react";
 import { buttonVariants } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { ThemeToggle } from "./theme-toggle";
-const Navbar = () => {
+import { auth } from "@/auth";
+const Navbar = async () => {
+  const session = await auth();
   return (
-    <div className="bg-zinc-100 py-2 border-b border-s-zinc-200 fixed w-full z-10 ">
+    <nav className="bg-zinc-100 py-2 border-b border-s-zinc-200 fixed w-full z-10 ">
       <div className="container flex gap-4 justify-between">
         <div>
           <Link
             className={buttonVariants({ variant: "outline" })}
-            href="/signin"
+            href="/api/auth/signin"
           >
             Sign in
           </Link>
@@ -35,7 +37,7 @@ const Navbar = () => {
           </Avatar>
         </div>
       </div>
-    </div>
+    </nav>
   );
 };
 
