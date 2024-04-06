@@ -20,7 +20,7 @@ async function getAllUserRoutines(userId: string) {
 }
 
 async function createRoutine(
-  user_id: number,
+  user_id: string,
   routine: z.infer<typeof newRoutineData>
 ) {
   try {

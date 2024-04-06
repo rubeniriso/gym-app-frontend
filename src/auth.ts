@@ -4,24 +4,23 @@ import EmailProvider from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { createUserSettings } from "./model/UserSettings.model";
-import DBClient from "./app/utils/db";
-const prisma = DBClient.getInstance().prisma;
+import DBClient from "./lib/db";
+import prisma from "./lib/db";
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
 } = NextAuth({
-  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user }) {
-      "use server";
       if (user.id !== undefined) {
         createUserSettings(user.id);
         return true;
       } else return false;
     },
   },
+
   adapter: PrismaAdapter(prisma),
   providers: [
     Google({

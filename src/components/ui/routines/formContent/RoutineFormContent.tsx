@@ -89,7 +89,7 @@ const RoutineFormContent = ({
             name="routinetype_id"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Routine type</FormLabel>
                 <Select
                   defaultValue={field.value.toString()}
                   onValueChange={field.onChange}

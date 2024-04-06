@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 
 const Page = async () => {
   const session = await auth();
-  if (!session || !session.user) redirect("/api/auth/signin");
+  if (!session || !session.user) redirect("/auth");
   const routines: Routine[] = await getAllUserRoutines(
     session.user.id as string
   );
@@ -32,7 +32,10 @@ const Page = async () => {
               routineTypes={routineTypes}
             />
           ))}
-        <AddRoutineCard routineTypes={routineTypes} />
+        <AddRoutineCard
+          submit_id={session.user.id as string}
+          routineTypes={routineTypes}
+        />
       </RoutinesContainer>
     </>
   );

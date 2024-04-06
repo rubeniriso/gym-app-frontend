@@ -7,15 +7,19 @@ import { createRoutine, editRoutine } from "@/model/Routine.model";
 import { useDialog } from "@/components/hooks/useDialog";
 interface AddRoutineThumbnailProps {
   routineTypes: RoutineType[];
+  submit_id: string;
 }
 
-const AddRoutineCard = ({ routineTypes }: AddRoutineThumbnailProps) => {
+const AddRoutineCard = ({
+  routineTypes,
+  submit_id,
+}: AddRoutineThumbnailProps) => {
   const { onOpen, setDialogContent } = useDialog();
   const handleOpenDialog = () => {
     onOpen();
     setDialogContent(
       <RoutineFormContent
-        submit_id="1"
+        submit_id={submit_id}
         title={"Create routine"}
         submitFunction={createRoutine}
         routineTypes={routineTypes}
@@ -25,7 +29,7 @@ const AddRoutineCard = ({ routineTypes }: AddRoutineThumbnailProps) => {
   return (
     <button
       onClick={handleOpenDialog}
-      className="flex flex-row items-center justify-center w-[300px] h-[400px] bg-slate-200"
+      className="text-black rounded-xl flex flex-row items-center justify-center w-[300px] h-[400px] bg-slate-200"
     >
       <AddCircleOutlineIcon width={700} height={700} />
     </button>

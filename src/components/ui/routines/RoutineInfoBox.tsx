@@ -3,22 +3,27 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { RoutineType } from "@/types/routineType";
 import RoutineDropdownMenu from "./dropdown/RoutineDropdownMenu";
+import { activateUserRoutine } from "@/model/UserSettings.model";
 interface RoutineInfoBoxProps {
   name: string;
   description: string;
   routine_id: string;
   isActive: boolean;
-  handleChange: () => void;
   routineTypes: RoutineType[];
+  user_id: string;
 }
 const RoutineInfoBox = async ({
   name,
   description,
   routine_id,
   isActive,
-  handleChange,
   routineTypes,
+  user_id,
 }: RoutineInfoBoxProps) => {
+  const handleChange = async () => {
+    activateUserRoutine(user_id as string, parseInt(routine_id));
+  };
+
   return (
     <>
       <div className="max-w-[300px] max-h-[300px] flex flex-row px-6 justify-between py-4 border-t">

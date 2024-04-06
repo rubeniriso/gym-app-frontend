@@ -1,4 +1,3 @@
-"use client";
 import { Routine } from "@/types/routine";
 import { activateUserRoutine } from "@/model/UserSettings.model";
 import RoutineThumbnail from "./RoutineThumbnail";
@@ -17,16 +16,12 @@ const RoutineCard = async ({
   routineTypes,
 }: RoutineThumbnailProps) => {
   const session = await auth();
-  if (!session || !session.user){
+  if (!session || !session.user) {
     redirect("/api/auth/signin");
   }
-  const handleChange = async () => {
-    if (session != undefined && session.user != undefined)
-      activateUserRoutine(session.user.id as string, routine.routine_id);
-  };
-  
+
   return (
-    <div className="flex flex-col shadow-md rounded-xl relative">
+    <div className="flex flex-col shadow-lg rounded-xl dark:bg-zinc-700 relative ">
       <a className="hover:cursor-pointer">
         <RoutineThumbnail
           icon_url={routine.icon_url}
@@ -36,7 +31,7 @@ const RoutineCard = async ({
           name={routine.name}
           description={routine.description}
           isActive={isActive}
-          handleChange={handleChange}
+          user_id={session.user.id as string}
           routineTypes={routineTypes}
           routine_id={routine.routine_id.toString()}
         />
