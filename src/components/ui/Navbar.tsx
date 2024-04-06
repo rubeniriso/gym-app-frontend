@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 const Navbar = async () => {
   const session = await auth();
   return (
-    <nav className="py-2 border-b border-s-zinc-200 fixed w-full z-10 ">
+    <nav className="py-2 border-b border-s-zinc-200 fixed w-full z-10">
       <div className="container flex gap-4 justify-between">
         <div className="flex items-center gap-4">
           <Link className={buttonVariants({ variant: "outline" })} href="/">

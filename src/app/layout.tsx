@@ -26,8 +26,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar />
-            <main className="h-screen flex flex-col pt-[57px]">{children}</main>
+            <main className="h-screen flex flex-col">{children}</main>
           </ThemeProvider>
         </AuthProvider>
       </body>

@@ -1,6 +1,6 @@
 import React from "react";
-import RoutinesContainer from "../../components/ui/routines/RoutinesContainer";
-import { Routine } from "../../types/routine";
+import RoutinesContainer from "../../../components/ui/routines/RoutinesContainer";
+import { Routine } from "../../../types/routine";
 import { getAllUserRoutines } from "@/model/Routine.model";
 import { getUserActiveRoutine } from "@/model/UserSettings.model";
 import { RoutineType } from "@/types/routineType";

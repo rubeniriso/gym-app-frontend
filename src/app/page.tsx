@@ -1,19 +1,20 @@
 import { auth } from "@/auth";
 import Image from "next/image";
-import Dashboard from "./dashboard/page";
+import Dashboard from "./(with-navbar)/dashboard/page";
 import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 import SignInCard from "@/components/ui/signin/SignInCard";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const session = await auth();
   return (
-    <div className="flex min-h-screen w-full flex-row p-24">
+    <div className="flex min-h-screen w-full justify-center items-center flex-col">
       {session ? (
-        <Dashboard />
+        redirect("/dashboard")
       ) : (
-        <div className="flex flex-row w-[50%] gap-10 justify-between items-center">
-          <div>
+        <div className="flex w-full text-balance justify-between px-[30%]">
+          <div className="w-[50%] flex flex-col">
             <h1 className="text-4xl font-bold text-wrap">
               Check out our exercise selection!
             </h1>
@@ -21,10 +22,12 @@ export default async function Home() {
               className={buttonVariants({ variant: "outline" })}
               href={"/exercises"}
             >
-              Go
+              <p>Go</p>
             </Link>
           </div>
-          <SignInCard />
+          <div>
+            <SignInCard />
+          </div>
         </div>
       )}
     </div>
