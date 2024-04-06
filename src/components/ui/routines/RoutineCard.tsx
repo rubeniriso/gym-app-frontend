@@ -1,11 +1,6 @@
 "use client";
 import { Routine } from "@/types/routine";
-import Image from "next/image";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { activateUserRoutine } from "@/model/User.model";
-import { Button } from "../button";
+import { activateUserRoutine } from "@/model/UserSettings.model";
 import RoutineThumbnail from "./RoutineThumbnail";
 import RoutineInfoBox from "./RoutineInfoBox";
 import { RoutineType } from "@/types/routineType";

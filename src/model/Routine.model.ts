@@ -5,10 +5,10 @@ import { revalidatePath, revalidateTag } from "next/cache";
 import { z } from "zod";
 
 // Define the function to call the backend function
-async function getAllUserRoutines(userId: number) {
+async function getAllUserRoutines(userId: string) {
   try {
     const response = await fetch(
-      `http://localhost:5002/api/v1/routines/user/${userId}`,
+      `${process.env.DOMAIN_URL}/api/v1/routines/user/${userId}`,
       { next: { tags: ["routines"] }, method: "GET" }
     );
     const data = await response.json();
@@ -25,7 +25,7 @@ async function createRoutine(
 ) {
   try {
     const response = await fetch(
-      `http://localhost:5002/api/v1/routines/create/${user_id}`,
+      `${process.env.DOMAIN_URL}/api/v1/routines/create/${user_id}`,
       {
         method: "POST",
         headers: {
@@ -48,7 +48,7 @@ async function editRoutine(
 ) {
   try {
     const response = await fetch(
-      `http://localhost:5002/api/v1/routines/update/${routine_id}`,
+      `${process.env.DOMAIN_URL}/api/v1/routines/update/${routine_id}`,
       {
         method: "PUT",
         headers: {
@@ -68,7 +68,7 @@ async function deleteRoutine(routine_id: number) {
   try {
     revalidateTag("routines");
     const response = await fetch(
-      `http://localhost:5002/api/v1/routines/${routine_id}`,
+      `${process.env.DOMAIN_URL}/api/v1/routines/${routine_id}`,
       {
         method: "DELETE",
         headers: {

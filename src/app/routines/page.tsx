@@ -2,17 +2,24 @@ import React from "react";
 import RoutinesContainer from "../../components/ui/routines/RoutinesContainer";
 import { Routine } from "../../types/routine";
 import { getAllUserRoutines } from "@/model/Routine.model";
-import RoutineThumbnail from "../../components/ui/routines/RoutineThumbnail";
-import { getUserActiveRoutine } from "@/model/User.model";
+import { getUserActiveRoutine } from "@/model/UserSettings.model";
 import { RoutineType } from "@/types/routineType";
 import { getAllRoutineTypes } from "@/model/RoutineType.model";
 import RoutineCard from "@/components/ui/routines/RoutineCard";
-import DialogComponent from "@/components/ui/dialog/DialogComponent";
 import AddRoutineCard from "@/components/ui/routines/AddRoutineCard";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 const Page = async () => {
-  const routines: Routine[] = await getAllUserRoutines(1);
-  const activeRoutine: number = await getUserActiveRoutine(1);
+  const session = await auth();
+  console.log(session);
+  if (!session || !session.user) redirect("/api/auth/signin");
+  const routines: Routine[] = await getAllUserRoutines(
+    session.user.id as string
+  );
+  const activeRoutine: number = await getUserActiveRoutine(
+    session.user.id as string
+  );
   const routineTypes: RoutineType[] = await getAllRoutineTypes();
   return (
     <>
