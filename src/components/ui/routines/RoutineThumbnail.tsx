@@ -4,7 +4,7 @@ import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
-import { activateUserRoutine } from "@/model/User.model";
+import { activateUserRoutine } from "@/model/UserSettings.model";
 import { Button } from "../button";
 interface RoutineThumbnailProps {
   icon_url: string;

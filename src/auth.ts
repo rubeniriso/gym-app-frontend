@@ -6,15 +6,16 @@ import { PrismaClient } from "@prisma/client";
 import { createUserSettings } from "./model/UserSettings.model";
 import DBClient from "./app/utils/db";
 const prisma = DBClient.getInstance().prisma;
-
 export const {
   handlers: { GET, POST },
   auth,
   signIn,
   signOut,
 } = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async signIn({ user }) {
+      "use server";
       if (user.id !== undefined) {
         createUserSettings(user.id);
         return true;

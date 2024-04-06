@@ -10,7 +10,7 @@ const Navbar = async () => {
   return (
     <nav className="bg-zinc-100 py-2 border-b border-s-zinc-200 fixed w-full z-10 ">
       <div className="container flex gap-4 justify-between">
-        <div>
+        <div className="flex items-center gap-4">
           <Link className={buttonVariants({ variant: "outline" })} href="/">
             <HomeIcon />
           </Link>
@@ -43,14 +43,9 @@ const Navbar = async () => {
               </form>
             </div>
           ) : (
-            <form
-              action={async () => {
-                "use server";
-                await signIn();
-              }}
-            >
-              <Button type="submit">Sign In</Button>
-            </form>
+            <Button>
+              <Link href={"/auth"}>Sign In</Link>
+            </Button>
           )}
         </div>
       </div>
