@@ -1,15 +1,18 @@
 import { PrismaClient } from "@prisma/client";
 
-const prismaClientSingleton = () => {
-  return new PrismaClient();
-};
+class DBClient {
+  public prisma: PrismaClient;
+  private static instance: DBClient;
+  private constructor() {
+    this.prisma = new PrismaClient();
+  }
 
-declare global {
-  var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>;
+  public static getInstance = () => {
+    if (!DBClient.instance) {
+      DBClient.instance = new DBClient();
+    }
+    return DBClient.instance;
+  };
 }
 
-const prisma = globalThis.prismaGlobal ?? prismaClientSingleton();
-
-export default prisma;
-
-if (process.env.NODE_ENV !== "production") globalThis.prismaGlobal = prisma;
+export default DBClient;

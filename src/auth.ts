@@ -4,7 +4,8 @@ import EmailProvider from "next-auth/providers/nodemailer";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import { createUserSettings } from "./model/UserSettings.model";
-const prisma = new PrismaClient();
+import DBClient from "./app/utils/db";
+const prisma = DBClient.getInstance().prisma;
 
 export const {
   handlers: { GET, POST },

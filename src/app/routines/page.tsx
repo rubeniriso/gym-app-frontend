@@ -12,7 +12,6 @@ import { redirect } from "next/navigation";
 
 const Page = async () => {
   const session = await auth();
-  console.log(session);
   if (!session || !session.user) redirect("/api/auth/signin");
   const routines: Routine[] = await getAllUserRoutines(
     session.user.id as string
