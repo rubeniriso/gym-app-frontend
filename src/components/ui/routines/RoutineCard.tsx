@@ -4,6 +4,8 @@ import { activateUserRoutine } from "@/model/UserSettings.model";
 import RoutineThumbnail from "./RoutineThumbnail";
 import RoutineInfoBox from "./RoutineInfoBox";
 import { RoutineType } from "@/types/routineType";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 interface RoutineThumbnailProps {
   routine: Routine;
   isActive: boolean;
@@ -14,9 +16,15 @@ const RoutineCard = async ({
   isActive,
   routineTypes,
 }: RoutineThumbnailProps) => {
+  const session = await auth();
+  if (!session || !session.user){
+    redirect("/api/auth/signin");
+  }
   const handleChange = async () => {
-    activateUserRoutine(1, routine.routine_id);
+    if (session != undefined && session.user != undefined)
+      activateUserRoutine(session.user.id as string, routine.routine_id);
   };
+  
   return (
     <div className="flex flex-col shadow-md rounded-xl relative">
       <a className="hover:cursor-pointer">
