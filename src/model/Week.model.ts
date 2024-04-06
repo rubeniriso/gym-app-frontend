@@ -1,7 +1,9 @@
+'use server'
 async function getAllRotuineWeeks(routineId: number) {
   try {
     const response = await fetch(
-      `http://localhost:5002/api/v1/weeks/routine/${routineId}`
+      `${process.env.DOMAIN_URL}/api/v1/weeks/routine/${routineId}`,
+      { next: { tags: ["weeks"] }, method: "GET" }
     );
     const data = await response.json();
     return data;

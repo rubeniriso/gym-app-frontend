@@ -1,16 +1,40 @@
-import WeekThumbnail from "@/components/ui/weeks/WeekThumbnail";
 import WeekWrapper from "@/components/ui/weeks/WeekWrapper";
 import { getAllRotuineWeeks } from "@/model/Week.model";
 import { Week } from "@/types/week";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 const Page = async () => {
-  const weeks: Week[] = await getAllRotuineWeeks(1);
+  const weekId = 3;
+  const weeks: Week[] = await getAllRotuineWeeks(weekId);
   return (
     <WeekWrapper>
-      {weeks &&
-        weeks.map((week: Week, index) => (
-          <WeekThumbnail key={index} week={week} />
-        ))}
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          {weeks &&
+            weeks.map((week: Week, index) => (
+              <PaginationItem>
+                <PaginationLink
+                  href={`/routines/routine/${week.week_id}/day-training/`}
+                >
+                  {index}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </WeekWrapper>
   );
 };
