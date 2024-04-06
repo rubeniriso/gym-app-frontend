@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { ThemeToggle } from "../theme-toggle";
 import { auth, signIn, signOut } from "@/auth";
 import HomeIcon from "@mui/icons-material/Home";
+import { redirect } from "next/navigation";
 const Navbar = async () => {
   const session = await auth();
   return (
@@ -14,15 +15,13 @@ const Navbar = async () => {
           <Link className={buttonVariants({ variant: "outline" })} href="/">
             <HomeIcon />
           </Link>
-          {session ? (
+          {session && (
             <Link
               className={buttonVariants({ variant: "outline" })}
               href="/routines"
             >
               Routines
             </Link>
-          ) : (
-            <></>
           )}
         </div>
         <div className="flex flex-row gap-4">
@@ -36,16 +35,19 @@ const Navbar = async () => {
               <form
                 action={async () => {
                   "use server";
-                  await signOut();
+                  await signOut({ redirect: true, redirectTo: `/` });
                 }}
               >
                 <Button variant={"outline"}>Sign Out</Button>
               </form>
             </div>
           ) : (
-            <Button variant={"outline"}>
-              <Link href={"/auth"}>Sign In</Link>
-            </Button>
+            <Link
+              className={buttonVariants({ variant: "outline" })}
+              href={"/auth"}
+            >
+              Sign In
+            </Link>
           )}
         </div>
       </div>

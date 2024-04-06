@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import { createUserSettings } from "./model/UserSettings.model";
 import DBClient from "./lib/db";
 import prisma from "./lib/db";
+import { redirect } from "next/navigation";
 export const {
   handlers: { GET, POST },
   auth,
