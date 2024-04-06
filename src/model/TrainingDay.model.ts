@@ -1,7 +1,7 @@
 async function getAllSessions() {
   try {
     const response = await fetch(
-      "http://localhost:5002/api/v1/sessions/get-all"
+      `${process.env.DOMAIN_URL}/api/v1/trainingdays/get-all`
     );
     const data = await response.json();
     return data;

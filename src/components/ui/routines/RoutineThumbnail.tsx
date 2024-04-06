@@ -1,20 +1,27 @@
+"use client";
 import { Routine } from "@/types/routine";
 import Image from "next/image";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
+import { activateUserRoutine } from "@/model/User.model";
+import { Button } from "../button";
 interface RoutineThumbnailProps {
-  routine: Routine;
+  icon_url: string;
+  icon_alt_text: string;
 }
-const RoutineThumbnail = async ({ routine }: RoutineThumbnailProps) => {
+const RoutineThumbnail = async ({
+  icon_url,
+  icon_alt_text,
+}: RoutineThumbnailProps) => {
   return (
-    <div>
-      <Image
-        alt={routine.iconAltText}
-        src={routine.iconUrl}
-        width={400}
-        height={400}
-      />
-      <h2>{routine.name}</h2>
-      <p>{routine.description}</p>
-    </div>
+    <Image
+      className="rounded-xl"
+      alt={icon_alt_text}
+      src={icon_url}
+      width={300}
+      height={300}
+    />
   );
 };
 

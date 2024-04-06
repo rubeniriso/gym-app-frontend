@@ -1,14 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [
+        domains: ['png.pngtree.com', 'images.vexels.com'],
+      },
+      async headers() {
+        return [
           {
-            protocol: 'https',
-            hostname: 'previews.123rf.com',
-            port: '',
-            pathname: '/images/**',
+            // Define the route for your API
+            source: "/api/:path*",
+            // Set the CORS headers
+            headers: [
+              { key: "Access-Control-Allow-Origin", value: "*" },
+              { key: "Access-Control-Allow-Methods", value: "GET, POST, PUT, DELETE, OPTIONS" },
+              { key: "Access-Control-Allow-Headers", value: "X-Requested-With, Content-Type, Authorization" },
+              { key: "Access-Control-Allow-Credentials", value: "true" },
+            ],
           },
-        ],
+        ];
       },
 };
 

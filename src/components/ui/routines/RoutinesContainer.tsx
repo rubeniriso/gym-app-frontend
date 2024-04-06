@@ -1,10 +1,19 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import RoutineThumbnail from "./RoutineThumbnail";
+import AddRoutineThumbnail from "./AddRoutineCard";
+import DialogComponent from "../dialog/DialogComponent";
 interface RoutinesContainerProps {
-  children: React.ReactElement<typeof RoutineThumbnail>[];
+  children: React.ReactNode;
 }
-const RoutinesContainer = async ({ children }: RoutinesContainerProps) => {
-  return <div className="flex flex-row gap-4">{children}</div>;
+const RoutinesContainer = ({ children }: RoutinesContainerProps) => {
+  return (
+    <div className="flex justify-center  my-5 flex-row">
+      <div className="w-[75%] flex flex-wrap gap-8">{children}</div>
+
+      <DialogComponent />
+    </div>
+  );
 };
 
 export default RoutinesContainer;
