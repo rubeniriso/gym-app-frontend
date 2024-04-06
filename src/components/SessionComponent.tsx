@@ -1,4 +1,4 @@
-import { getAllSessions } from "@/model/Session.model";
+import { getAllSessions } from "@/model/TrainingDay.model";
 import { Session } from "@/types/session";
 
 export const SessionComponent = async () => {
