@@ -3,11 +3,7 @@ interface WeekWrapperProps {
   children: React.ReactNode;
 }
 const WeekWrapper = async ({ children }: WeekWrapperProps) => {
-  return (
-    <div className="flex flex-row gap-4">
-      <div>{children}</div>
-    </div>
-  );
+  return <div className="flex flex-col items-center">{children}</div>;
 };
 
 export default WeekWrapper;

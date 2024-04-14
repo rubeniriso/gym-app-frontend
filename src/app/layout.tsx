@@ -4,6 +4,8 @@ import "@/styles/globals.css";
 import Navbar from "../components/ui/Navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import AuthProvider from "@/components/auth-provider";
+import DialogComponent from "@/components/ui/dialog/DialogComponent";
+import DialogWrapper from "@/components/ui/dialog/DialogWrapper";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +30,7 @@ export default function RootLayout({
           >
             <Navbar />
             <main className="h-screen flex flex-col pt-[57px]">{children}</main>
+            <DialogWrapper />
           </ThemeProvider>
         </AuthProvider>
       </body>

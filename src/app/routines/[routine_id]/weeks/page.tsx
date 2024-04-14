@@ -9,10 +9,15 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useDialog } from "@/components/hooks/useDialog";
+import AddWeekThumbnail from "@/components/ui/AddWeekThumbnail";
+import { auth } from "@/auth";
 
 const Page = async ({ params }: { params: { routine_id: string } }) => {
   const routineId = params.routine_id;
   const weeks: Week[] = await getAllRotuineWeeks(routineId);
+  const session = await auth();
+
   return (
     <WeekWrapper>
       <Pagination>
@@ -35,6 +40,7 @@ const Page = async ({ params }: { params: { routine_id: string } }) => {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
+      <AddWeekThumbnail routineId={routineId} />
     </WeekWrapper>
   );
 };

@@ -1,74 +1,35 @@
 "use client";
-import { NewRoutineData } from "@/types/data/NewRoutineData";
+import { NewWeekData } from "@/types/data/NewWeekData";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { useState } from "react";
-import ModalForm from "./form/ModalForm";
 import WeekFormContent from "./weeks/WeekFormContent";
-
-interface AddElementThumbnailProps {
-  routineId: number;
+import RoutineFormContent from "./routines/formContent/RoutineFormContent";
+import { useDialog } from "../hooks/useDialog";
+import { createWeek } from "@/model/Week.model";
+interface AddWeekProps {
+  routineId: string;
 }
 
-const AddWeekThumbnail = ({ routineId }: AddElementThumbnailProps) => {
-  const [isNewRoutineModalOpen, setIsNewRoutineModalOpen] =
-    useState<boolean>(false);
-
-  const handleOpenNewRoutineModal = () => {
-    setIsNewRoutineModalOpen(true);
+const AddWeekThumbnail = ({ routineId }: AddWeekProps) => {
+  const { onOpen, setDialogContent } = useDialog();
+  const handleOpenDialog = () => {
+    onOpen();
+    setDialogContent(
+      <WeekFormContent
+        submit_id={routineId}
+        title={"Create routine"}
+        submitFunction={createWeek}
+      />
+    );
   };
-
-  const handleCloseNewRoutineModal = () => {
-    setIsNewRoutineModalOpen(false);
-  };
-  const handleFormSubmit = (data: NewRoutineData): void => {
-    handleCloseNewRoutineModal();
-    createWeek(data);
-  };
-
-  const createWeek = (data: NewRoutineData) => {
-    console.log(data);
-
-    fetch("http://localhost:5002/api/v1/weeks/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        routine_id: routineId,
-        name: data.name,
-        description: data.description,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((responseData) => {
-        console.log("Success:", responseData);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-
   return (
-    <>
-      <button
-        className="flex flex-row items-center justify-center w-[400px] h-[400px] bg-slate-200"
-        onClick={handleOpenNewRoutineModal}
-      >
-        <AddCircleOutlineIcon width={400} height={400} />
-      </button>
-      <ModalForm
-        isOpen={isNewRoutineModalOpen}
-        onClose={handleCloseNewRoutineModal}
-        hasCloseBtn={true}
-      >
-        <WeekFormContent handleFormSubmit={handleFormSubmit} />
-      </ModalForm>
-    </>
+    <button
+      onClick={handleOpenDialog}
+      className="text-black rounded-sm px-4 py-2 justify-between flex flex-row items-center bg-slate-200"
+    >
+      <AddCircleOutlineIcon />
+      Add week
+    </button>
   );
 };
 

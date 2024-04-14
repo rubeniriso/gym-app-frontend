@@ -9,7 +9,6 @@ interface AddRoutineThumbnailProps {
   routineTypes: RoutineType[];
   submit_id: string;
 }
-
 const AddRoutineCard = ({
   routineTypes,
   submit_id,
