@@ -20,7 +20,7 @@ const RoutineThumbnail = async ({
   return (
     <>
       {icon_url !== undefined ? (
-        <Link href={`/routines/${routine_id}/`}>
+        <Link href={`/routines/${routine_id}/weeks`}>
           <Image
             className="rounded-xl"
             alt={icon_alt_text}
