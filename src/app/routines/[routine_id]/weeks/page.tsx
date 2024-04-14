@@ -10,9 +10,9 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-const Page = async () => {
-  const weekId = 3;
-  const weeks: Week[] = await getAllRotuineWeeks(weekId);
+const Page = async ({ params }: { params: { routine_id: string } }) => {
+  const routineId = params.routine_id;
+  const weeks: Week[] = await getAllRotuineWeeks(routineId);
   return (
     <WeekWrapper>
       <Pagination>

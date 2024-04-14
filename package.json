@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "open-browser": "xdg-open http://localhost:3000",
     "asd": "npm run open-browser-linux && next dev",
     "open-browser-linux": "gnome-open http://localhost:3000",
+    "open-browser": "open http://localhost:3000",
     "postinstall": "prisma generate"
   },
   "dependencies": {

@@ -7,10 +7,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const Page = async ({ params }: { params: { slug: number } }) => {
-  const weekId = params.slug;
+const Page = async ({ params }: { params: { week_id: string } }) => {
+  const weekId = params.week_id;
   const trainingDays: TrainingDay[] = await getAllWeekTrainingDays(weekId);
-
+  console.log("Training days for week ", params.week_id + ": ", trainingDays);
   return (
     <>
       Week Identifier: {weekId}

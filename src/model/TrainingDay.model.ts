@@ -11,7 +11,7 @@ async function getAllSessions() {
   }
 }
 
-async function getAllWeekTrainingDays(weekId: number) {
+async function getAllWeekTrainingDays(weekId: string) {
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/trainingDays/week/${weekId}`
