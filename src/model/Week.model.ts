@@ -22,6 +22,7 @@ async function createWeek(
   routineId: string,
   routine: z.infer<typeof newWeekData>
 ) {
+  console.log(routineId, routine)
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/weeks/create/${routineId}`,

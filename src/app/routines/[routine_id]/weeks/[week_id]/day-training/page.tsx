@@ -6,14 +6,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import AddTrainingDayThumbnail from "@/components/ui/trainingDay/AddTrainingDayThumbnail";
 
 const Page = async ({ params }: { params: { week_id: string } }) => {
   const weekId = params.week_id;
   const trainingDays: TrainingDay[] = await getAllWeekTrainingDays(weekId);
-  console.log("Training days for week ", params.week_id + ": ", trainingDays);
   return (
     <>
       Week Identifier: {weekId}
+      <AddTrainingDayThumbnail weekId={weekId} />
       <Accordion type="single" collapsible>
         {trainingDays &&
           trainingDays.map((trainingDay: TrainingDay, index) => (

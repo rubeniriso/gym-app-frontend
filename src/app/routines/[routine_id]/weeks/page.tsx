@@ -9,15 +9,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { useDialog } from "@/components/hooks/useDialog";
-import AddWeekThumbnail from "@/components/ui/AddWeekThumbnail";
-import { auth } from "@/auth";
+import AddWeekThumbnail from "@/components/ui/weeks/AddWeekThumbnail";
 
 const Page = async ({ params }: { params: { routine_id: string } }) => {
   const routineId = params.routine_id;
   const weeks: Week[] = await getAllRotuineWeeks(routineId);
-  const session = await auth();
-
   return (
     <WeekWrapper>
       <Pagination>
@@ -31,7 +27,7 @@ const Page = async ({ params }: { params: { routine_id: string } }) => {
                 <PaginationLink
                   href={`/routines/${routineId}/weeks/${week.week_id}/day-training/`}
                 >
-                  {index}
+                  {index + 1}
                 </PaginationLink>
               </PaginationItem>
             ))}
