@@ -10,6 +10,7 @@ async function getAllRotuineWeeks(routineId: string) {
       `${process.env.DOMAIN_URL}/api/v1/weeks/routine/${routineId}`,
       { next: { tags: ["weeks"] }, method: "GET" }
     );
+    revalidateTag("weeks")
     const data = await response.json();
     return data;
   } catch (error) {

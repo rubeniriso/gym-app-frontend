@@ -29,7 +29,7 @@ const Page = async ({ params }: { params: { routine_id: string } }) => {
             weeks.map((week: Week, index) => (
               <PaginationItem>
                 <PaginationLink
-                  href={`/routines/routine/${week.week_id}/day-training/`}
+                  href={`/routines/${routineId}/weeks/${week.week_id}/day-training/`}
                 >
                   {index}
                 </PaginationLink>
