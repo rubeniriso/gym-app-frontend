@@ -16,7 +16,7 @@ const Page = async () => {
   const routines: Routine[] = await getAllUserRoutines(
     session.user.id as string
   );
-  const activeRoutine: number = await getUserActiveRoutine(
+  const activeRoutine: string = await getUserActiveRoutine(
     session.user.id as string
   );
   const routineTypes: RoutineType[] = await getAllRoutineTypes();

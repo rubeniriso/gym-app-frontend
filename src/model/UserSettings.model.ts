@@ -29,7 +29,7 @@ async function getUserActiveRoutine(userId: string) {
     throw error;
   }
 }
-async function activateUserRoutine(userId: string, routineId: number) {
+async function activateUserRoutine(userId: string, routineId: string) {
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/usersettings/make-routine-active`,

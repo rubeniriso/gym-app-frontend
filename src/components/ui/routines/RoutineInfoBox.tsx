@@ -21,7 +21,7 @@ const RoutineInfoBox = async ({
   user_id,
 }: RoutineInfoBoxProps) => {
   const handleChange = async () => {
-    activateUserRoutine(user_id as string, parseInt(routine_id));
+    activateUserRoutine(user_id as string, routine_id as string);
   };
 
   return (

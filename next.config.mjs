@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["clipground.com", "images.vexels.com"],
+    domains: ["clipground.com", "images.vexels.com", "webstockreview.net"],
   },
   async headers() {
     return [

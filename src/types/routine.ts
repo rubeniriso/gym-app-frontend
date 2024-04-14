@@ -3,7 +3,7 @@
  */
 export type Routine = {
   /** Id of the Routine */
-  routine_id: number;
+  routine_id: string;
   /** name of the Routine */
   name: string;
   /** Description of the Routine */

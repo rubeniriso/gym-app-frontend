@@ -26,6 +26,7 @@ const RoutineCard = async ({
         <RoutineThumbnail
           icon_url={routine.icon_url}
           icon_alt_text={routine.icon_alt_text}
+          routine_id={routine.routine_id}
         />
         <RoutineInfoBox
           name={routine.name}
@@ -33,7 +34,7 @@ const RoutineCard = async ({
           isActive={isActive}
           user_id={session.user.id as string}
           routineTypes={routineTypes}
-          routine_id={routine.routine_id.toString()}
+          routine_id={routine.routine_id}
         />
       </a>
     </div>
