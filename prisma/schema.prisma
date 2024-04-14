@@ -52,7 +52,7 @@ model usersettings {
   id            Int      @id @default(autoincrement())
   user_id       String   @unique
   //theme         Int
-  activeroutine Int?
+  activeroutine String?  @db.Uuid
   routine       routine? @relation(fields: [activeroutine], references: [routine_id], onDelete: SetNull)
   User          User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
 }
@@ -65,32 +65,61 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model bodypart {
+  bodypart_id String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name        String   @db.VarChar(100)
+  muscle      muscle[]
+}
+
+model equipment {
+  equipment_id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name         String
+  description  String
+}
+
+model muscle {
+  muscle_id      String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name           String           @db.VarChar(100)
+  bodypart_id    String           @db.Uuid
+  bodypart       bodypart         @relation(fields: [bodypart_id], references: [bodypart_id], onDelete: Cascade, onUpdate: NoAction)
+  exercise       exercise[]
+  muscleexercise muscleexercise[]
+}
+
+model muscleexercise {
+  muscleexercise_id String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  muscle_id         String   @db.Uuid
+  muscle            muscle   @relation(fields: [muscle_id], references: [muscle_id], onDelete: Cascade, onUpdate: NoAction)
+  exercise_id       String   @db.Uuid
+  exercise          exercise @relation(fields: [exercise_id], references: [exercise_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
 model exercise {
-  exercise_id         Int                   @id @default(autoincrement())
+  exercise_id         String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                String?               @db.VarChar(100)
-  body_part           String?               @db.VarChar(100)
   equipment           String?               @db.VarChar(100)
   gif_url             String?               @db.VarChar(255)
-  target              String?               @db.VarChar(100)
-  secondary_muscles   String[]
-  instructions        String[]
+  primarymuscle_id    String                @db.Uuid
+  primarymuscle       muscle                @relation(fields: [primarymuscle_id], references: [muscle_id], onDelete: Cascade, onUpdate: NoAction)
+  instructions        String                @db.VarChar(600)
   trainingdayexercise trainingdayexercise[]
+  muscleexercise      muscleexercise[]
 }
 
 model routine {
-  routine_id     Int            @id @default(autoincrement())
+  routine_id     String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String         @db.VarChar(100)
   description    String?
   user_id        String
   user           User           @relation(fields: [user_id], references: [id])
-  routinetype_id Int
+  routinetype_id String         @db.Uuid
   routinetype    routinetype    @relation(fields: [routinetype_id], references: [routinetype_id], onDelete: NoAction, onUpdate: NoAction)
   weeks          week[]
   usersettings   usersettings[]
 }
 
 model routinetype {
-  routinetype_id Int       @id @default(autoincrement())
+  routinetype_id String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name           String    @db.VarChar(255)
   description    String?
   icon_url       String
@@ -99,32 +128,32 @@ model routinetype {
 }
 
 model trainingdayexercise {
-  trainingdayexercise_id Int         @id @default(autoincrement())
+  trainingdayexercise_id String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                   String      @db.VarChar(100)
   sets                   Int?
   reps                   Int?
   weight                 Int?
   rir                    Int?
-  exercise_id            Int
+  exercise_id            String      @db.Uuid
   exercise               exercise    @relation(fields: [exercise_id], references: [exercise_id], onDelete: Cascade, onUpdate: NoAction)
-  trainingday_id         Int
+  trainingday_id         String      @db.Uuid
   trainingday            trainingday @relation(fields: [trainingday_id], references: [trainingday_id], onDelete: Cascade, onUpdate: NoAction)
 }
 
 model trainingday {
-  trainingday_id      Int                   @id @default(autoincrement())
+  trainingday_id      String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name                String                @db.VarChar(100)
   description         String?
-  week_id             Int?
+  week_id             String?               @db.Uuid
   week                week?                 @relation(fields: [week_id], references: [week_id], onDelete: Cascade, onUpdate: NoAction)
   trainingdayexercise trainingdayexercise[]
 }
 
 model week {
-  week_id      Int           @id @default(autoincrement())
+  week_id      String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   name         String        @db.VarChar(100)
   description  String?
-  routine_id   Int
+  routine_id   String        @db.Uuid
   routine      routine       @relation(fields: [routine_id], references: [routine_id], onDelete: Cascade, onUpdate: NoAction)
   trainingdays trainingday[]
 }

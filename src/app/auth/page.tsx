@@ -10,7 +10,7 @@ import React from "react";
 import Image from "next/image";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
-import SignInWithGoogleButton from "@/components/ui/signin/SignInWithGoogleButton";
+import SignInWithGoogleButton from "@/components/ui/auth/SignInWithGoogleButton";
 
 const Page = async () => {
   const session = await auth();
