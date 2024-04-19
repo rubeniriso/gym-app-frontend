@@ -2,6 +2,12 @@
 const nextConfig = {
   images: {
     domains: ["clipground.com", "images.vexels.com", "webstockreview.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
   },
   async headers() {
     return [

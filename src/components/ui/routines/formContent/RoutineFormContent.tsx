@@ -4,7 +4,6 @@ import {
   Form,
   FormItem,
   FormControl,
-  FormDescription,
   FormField,
   FormLabel,
   FormMessage,
@@ -23,9 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RoutineType } from "@/types/routineType";
-import { createRoutine } from "@/model/Routine.model";
 import { newRoutineData } from "@/types/data/newRoutineData";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { DialogFooter } from "@/components/ui/dialog";
 import { useDialog } from "@/components/hooks/useDialog";
 interface RoutineFormContentProps {
   routineTypes: RoutineType[];

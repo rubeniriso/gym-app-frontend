@@ -12,6 +12,7 @@ import TrainingDayAccordion from "@/components/ui/trainingDay/TrainingDayAccordi
 const Page = async ({ params }: { params: { week_id: string } }) => {
   const weekId = params.week_id;
   const trainingDays: TrainingDay[] = await getAllWeekTrainingDays(weekId);
+
   return (
     <>
       Week Identifier: {weekId}

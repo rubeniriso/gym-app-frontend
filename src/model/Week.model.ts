@@ -4,15 +4,25 @@ import { z } from "zod";
 import { newWeekData } from "@/types/data/NewWeekData";
 async function getAllRotuineWeeks(routineId: string) {
   try {
-    console.log(routineId);
     revalidateTag("weeks");
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/weeks/routine/${routineId}`,
       { next: { tags: ["weeks"] }, method: "GET" }
     );
-    revalidateTag("weeks")
+    revalidateTag("weeks");
     const data = await response.json();
     return data;
+  } catch (error) {
+    console.error("Error fetching session data:", error);
+    throw error;
+  }
+}
+async function getWeekWithTrainingDaysData(weekId: string) {
+  try {
+    const response = await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/weeks/${weekId}/with-trainingdays-data/`,
+      { next: { tags: ["week"] }, method: "GET" }
+    );
   } catch (error) {
     console.error("Error fetching session data:", error);
     throw error;
@@ -22,7 +32,7 @@ async function createWeek(
   routineId: string,
   routine: z.infer<typeof newWeekData>
 ) {
-  console.log(routineId, routine)
+  console.log(routineId, routine);
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/weeks/create/${routineId}`,
@@ -41,4 +51,4 @@ async function createWeek(
     throw error;
   }
 }
-export { getAllRotuineWeeks, createWeek };
+export { getAllRotuineWeeks, createWeek, getWeekWithTrainingDaysData };

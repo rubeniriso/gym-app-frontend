@@ -8,7 +8,10 @@ async function getTrainingDayExercisesByTrainingDayId(trainingDayId: string) {
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/${trainingDayId}`,
-      { next: { tags: ["trainingDayExercises"] }, method: "GET" }
+      {
+        next: { tags: [`trainingDayExercises[${trainingDayId}]`] },
+        method: "GET",
+      }
     );
     const data = await response.json();
     return data;
@@ -24,7 +27,7 @@ async function createTrainingDayExercise(
 ) {
   try {
     const response = await fetch(
-      `${process.env.DOMAIN_URL}/api/v1/trainingDays/create/${trainingDayId}`,
+      `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/create/trainingday/${trainingDayId}`,
       {
         method: "POST",
         headers: {
@@ -33,7 +36,7 @@ async function createTrainingDayExercise(
         body: JSON.stringify(trainingDayExercise),
       }
     );
-    revalidateTag("trainingDayExercises");
+    revalidateTag(`trainingDayExercises[${trainingDayId}]`);
   } catch (error) {
     console.log(error);
     console.error("Error fetching trainingDayExercise data:", error);

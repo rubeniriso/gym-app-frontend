@@ -10,10 +10,21 @@ export type NewTrainingDayExerciseData = {
   description: string;
 };
 export const newTrainingDayExerciseData = z.object({
-  sets: z.number().int().optional(),
-  reps: z.number().int().optional(),
-  weight: z.number().optional(),
-  rir: z.number().int().optional(),
-  session_id: z.string(),
+  sets: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().int().optional()
+  ),
+  reps: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().int().optional()
+  ),
+  weight: z.preprocess(
+    (a) => parseFloat(z.string().parse(a)),
+    z.number().optional()
+  ),
+  rir: z.preprocess(
+    (a) => parseInt(z.string().parse(a), 10),
+    z.number().int().optional()
+  ),
   exercise_id: z.string(),
 });
