@@ -20,14 +20,31 @@ async function getTrainingDayExercisesByTrainingDayId(trainingDayId: string) {
     throw error;
   }
 }
-
+async function createEmptyTrainingDayExercise(trainingDayId: string) {
+  try {
+    const response = await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/create/trainingday/${trainingDayId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    revalidateTag(`trainingDayExercises[${trainingDayId}]`);
+  } catch (error) {
+    console.log(error);
+    console.error("Error fetching trainingDayExercise data:", error);
+    throw error;
+  }
+}
 async function createTrainingDayExercise(
   trainingDayId: string,
   trainingDayExercise: z.infer<typeof newTrainingDayExerciseData>
 ) {
   try {
     const response = await fetch(
-      `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/create/trainingday/${trainingDayId}`,
+      `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/create/trainingday/${trainingDayId}/empty`,
       {
         method: "POST",
         headers: {
@@ -45,4 +62,8 @@ async function createTrainingDayExercise(
 }
 
 // Export the function
-export { getTrainingDayExercisesByTrainingDayId, createTrainingDayExercise };
+export {
+  getTrainingDayExercisesByTrainingDayId,
+  createTrainingDayExercise,
+  createEmptyTrainingDayExercise,
+};
