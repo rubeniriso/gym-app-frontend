@@ -65,6 +65,7 @@ const TrainingDayExerciseForm = ({
     };
     getExercises();
   });
+
   function onSubmit(values: z.infer<typeof TrainingDaySchema>) {}
   return (
     <>
@@ -74,82 +75,42 @@ const TrainingDayExerciseForm = ({
             {trainingDayExercises &&
               trainingDayExercises.map(
                 (trainingDayExercise: TrainingDayExercise, index: number) => (
-                  <div key={index}>
-                    {/*<FormField
-                  control={form.control}
-                  name={`trainingdayexercises.${index}.exercise_id`}
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Routine type</FormLabel>
-                      <Select onValueChange={field.onChange}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select a routine type" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {exercises.map((exercise: Exercise) => (
-                            <SelectItem
-                              key={exercise.exercise_id}
-                              value={exercise.exercise_id.toString()}
-                            >
-                              {exercise.name}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />*/}
-                    <FormField
-                      control={form.control}
-                      name={`trainingdayexercises.${index}.sets`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Sets</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Weightlifting rt 1"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`trainingdayexercises.${index}.reps`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Reps</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Weightlifting rt 1"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name={`trainingdayexercises.${index}.weight`}
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Weight</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="Weightlifting rt 1"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                  <div className="flex flex-row" key={index}>
+                    <div className="flex flex-col">
+                      <label>Exercise</label>
+                      <select>
+                        <option value="">Select an exercise</option>
+                        {exercises.map((exercise: Exercise, key) => (
+                          <option
+                            key={key}
+                            value={`trainingdayexercises.${index}.exercise_id`}
+                          >
+                            {exercise.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="flex flex-col">
+                      <label htmlFor={`trainingdayexercises.${index}.sets`}>
+                        Sets:
+                      </label>
+
+                      <input
+                        name={`trainingdayexercises.${index}.sets`}
+                        type="number"
+                        value={trainingDayExercise.sets}
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <label htmlFor={`trainingdayexercises.${index}.reps`}>
+                        Reps:
+                      </label>
+                      <input
+                        name={`trainingdayexercises.${index}.reps`}
+                        type="number"
+                        value={trainingDayExercise.reps}
+                      />
+                    </div>
                   </div>
                 )
               )}
