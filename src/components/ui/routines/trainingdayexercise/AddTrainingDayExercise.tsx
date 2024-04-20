@@ -10,16 +10,23 @@ import { newTrainingDayExerciseData } from "@/types/data/NewTrainingDayExerciseD
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { log } from "console";
 interface AddTrainingDayExercise {
+  onAddTrainingDayExercise: () => void;
   trainingday_id: string;
 }
 
-const AddTrainingDayExercise = ({ trainingday_id }: AddTrainingDayExercise) => {
+const AddTrainingDayExercise = ({
+  trainingday_id,
+  onAddTrainingDayExercise,
+}: AddTrainingDayExercise) => {
   const form = useForm<z.infer<typeof newTrainingDayExerciseData>>({
     resolver: zodResolver(newTrainingDayExerciseData),
   });
   function onSubmit(values: z.infer<typeof newTrainingDayExerciseData>) {
+    console.log("Creating empty exercise");
     createEmptyTrainingDayExercise(trainingday_id);
+    onAddTrainingDayExercise();
   }
   return (
     <>

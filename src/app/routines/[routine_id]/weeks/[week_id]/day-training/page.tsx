@@ -1,11 +1,5 @@
 import { getAllWeekTrainingDays } from "@/model/TrainingDay.model";
 import { TrainingDay } from "@/types/trainingDay";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import AddTrainingDayThumbnail from "@/components/ui/trainingDay/AddTrainingDayThumbnail";
 import TrainingDayAccordion from "@/components/ui/trainingDay/TrainingDayAccordion";
 

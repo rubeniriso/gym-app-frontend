@@ -1,59 +1,34 @@
 "use client";
-import { getTrainingDayExercisesByTrainingDayId } from "@/model/TrainingDayExercise.model";
 import React, { useEffect, useState } from "react";
 import { TrainingDayExercise } from "@/types/data/TrainingDayExercise";
-import TrainingDayExerciseCard from "./TrainingDayExerciseCard";
 import { Form, useForm } from "react-hook-form";
 import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "../../form";
-import { Input } from "../../input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../select";
 import { getAllExercises } from "@/model/Exercises.model";
+import { Button } from "@/components/ui/button";
 import { Exercise } from "@/types/exercise";
+import { deleteTrainingDayExercise } from "@/model/TrainingDayExercise.model";
 
 interface TrainingDayExerciseFormProps {
-  trainingday_id: string;
+  trainingDayExercises: TrainingDayExercise[];
+  onDeleteTrainingDayExercise: () => void;
 }
 const TrainingDayExerciseForm = ({
-  trainingday_id,
+  trainingDayExercises,
+  onDeleteTrainingDayExercise,
 }: TrainingDayExerciseFormProps) => {
-  const [trainingDayExercises, setTrainingDayExercises] = useState<
-    TrainingDayExercise[]
-  >([]);
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
   const form = useForm<z.infer<typeof TrainingDaySchema>>({
     resolver: zodResolver(TrainingDaySchema),
   });
-  useEffect(() => {
-    const fetchTrainingDayExercises = async () => {
-      try {
-        // Assuming getTrainingDayExercisesByTrainingDayId returns exercises for a given training day ID
-        const trainingDayExercises: TrainingDayExercise[] =
-          await getTrainingDayExercisesByTrainingDayId(trainingday_id);
-        console.log(trainingDayExercises);
 
-        setTrainingDayExercises(trainingDayExercises);
-      } catch (error) {
-        console.error("Error fetching exercises:", error);
-      }
-    };
-    fetchTrainingDayExercises();
-  }, [trainingday_id]);
+  const handleDeleteTrainingDayExercise = (trainingdayexercise_id: string) => {
+    deleteTrainingDayExercise(trainingdayexercise_id);
+    onDeleteTrainingDayExercise();
+  };
+
   useEffect(() => {
     const getExercises = async () => {
       try {
@@ -64,12 +39,12 @@ const TrainingDayExerciseForm = ({
       }
     };
     getExercises();
-  });
+  }, []);
 
   function onSubmit(values: z.infer<typeof TrainingDaySchema>) {}
   return (
     <>
-      {trainingDayExercises ? (
+      {trainingDayExercises.length != 0 ? (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             {trainingDayExercises &&
@@ -111,13 +86,26 @@ const TrainingDayExerciseForm = ({
                         value={trainingDayExercise.reps}
                       />
                     </div>
+                    <div className="flex flex-col">
+                      <Button
+                        variant="destructive"
+                        type="button"
+                        onClick={() =>
+                          handleDeleteTrainingDayExercise(
+                            trainingDayExercise.trainingdayexercise_id
+                          )
+                        }
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </div>
                 )
               )}
           </form>
         </Form>
       ) : (
-        <p>Loading...</p>
+        <p>No exercises for this training day.</p>
       )}
     </>
   );

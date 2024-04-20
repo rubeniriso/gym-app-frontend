@@ -9,6 +9,7 @@ import { TrainingDay } from "@/types/trainingDay";
 import TrainingDayExercise from "../routines/trainingdayexercise/TrainingDayExerciseCard";
 import AddTrainingDayExercise from "@/components/ui/routines/trainingdayexercise/AddTrainingDayExercise";
 import TrainingDayExerciseForm from "../routines/trainingdayexercise/TrainingDayExerciseForm";
+import TrainingDayWrapper from "./TrainingDayWrapper";
 
 interface TrainingDayAccordionProps {
   trainingDays: TrainingDay[];
@@ -22,14 +23,9 @@ const TrainingDayAccordion = ({ trainingDays }: TrainingDayAccordionProps) => {
           <AccordionItem key={index} value={trainingDay.name}>
             <AccordionTrigger>{trainingDay.name}</AccordionTrigger>
             <AccordionContent>
-              <div className="flex flex-row items-center justify-center gap-3">
-                {trainingDay.description} -
-                <AddTrainingDayExercise
-                  trainingday_id={trainingDay.trainingday_id.toString()}
-                />
-              </div>
-              <TrainingDayExerciseForm
-                trainingday_id={trainingDay.trainingday_id}
+              <TrainingDayWrapper
+                trainingday_id={trainingDay.trainingday_id.toString()}
+                description={trainingDay.description}
               />
             </AccordionContent>
           </AccordionItem>

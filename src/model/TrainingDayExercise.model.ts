@@ -61,9 +61,26 @@ async function createTrainingDayExercise(
   }
 }
 
+async function deleteTrainingDayExercise(trainingDayId: string) {
+  try {
+    const response = await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/trainingdayexercises/${trainingDayId}`,
+      {
+        method: "DELETE"
+      }
+    );
+    revalidateTag(`trainingDayExercises[${trainingDayId}]`);
+  } catch (error) {
+    console.log(error);
+    console.error("Error fetching trainingDayExercise data:", error);
+    throw error;
+  }
+}
+
 // Export the function
 export {
   getTrainingDayExercisesByTrainingDayId,
   createTrainingDayExercise,
   createEmptyTrainingDayExercise,
+  deleteTrainingDayExercise
 };
