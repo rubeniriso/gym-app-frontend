@@ -51,4 +51,30 @@ async function createWeek(
     throw error;
   }
 }
-export { getAllRotuineWeeks, createWeek, getWeekWithTrainingDaysData };
+
+async function deleteWeek(weekId: string) {
+  try {
+    await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/weeks/${weekId}`, { method: "DELETE" }
+    );
+    revalidateTag("weeks");
+  } catch (error) {
+    console.error("Error deleting week:", error);
+    throw error;
+  }
+}
+
+async function getWeekData(weekId: string) {
+  try {
+    const response = await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/weeks/${weekId}`, { method: "GET" }
+    );
+    const data = await response.json();
+    return data[0];
+  } catch (error) {
+    console.error("Error deleting week:", error);
+    throw error;
+  }
+}
+
+export { getAllRotuineWeeks, createWeek, getWeekWithTrainingDaysData, deleteWeek, getWeekData };
