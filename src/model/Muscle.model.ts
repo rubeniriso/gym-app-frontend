@@ -2,11 +2,9 @@
 
 async function getAllMusclesByBodypart(bodypart_id: string) {
   try {
-    console.log("hi");
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/muscles/${bodypart_id}`
     );
-    console.log(response);
     const data = await response.json();
     return data;
   } catch (error) {
