@@ -1,12 +1,9 @@
 "use client";
-import { Routine } from "@/types/routine";
+import { getAllRotuineWeeks } from "@/model/Week.model";
+import { Week } from "@/types/week";
 import Image from "next/image";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
-import { activateUserRoutine } from "@/model/UserSettings.model";
-import { Button } from "../button";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 interface RoutineThumbnailProps {
   icon_url: string;
   icon_alt_text: string;
@@ -20,7 +17,7 @@ const RoutineThumbnail = async ({
   return (
     <>
       {icon_url !== undefined ? (
-        <Link href={`/routines/${routine_id}/weeks`}>
+        <Link href={`/routines/${routine_id}/default/day-trainings`}>
           <Image
             className="rounded-xl"
             alt={icon_alt_text}

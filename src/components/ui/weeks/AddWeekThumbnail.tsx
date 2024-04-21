@@ -1,9 +1,6 @@
 "use client";
-import { NewWeekData } from "@/types/data/NewWeekData";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { useState } from "react";
 import WeekFormContent from "./WeekFormContent";
-import RoutineFormContent from "../routines/formContent/RoutineFormContent";
 import { useDialog } from "../../hooks/useDialog";
 import { createWeek } from "@/model/Week.model";
 interface AddWeekProps {
