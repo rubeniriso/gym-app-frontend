@@ -5,7 +5,11 @@ import { Form, useForm } from "react-hook-form";
 import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { getAllExercises } from "@/model/Exercises.model";
+import {
+  getAllExercises,
+  getAllExercisesByBodyPart,
+  getAllExercisesByMuscle,
+} from "@/model/Exercises.model";
 import { Button } from "@/components/ui/button";
 import { Exercise } from "@/types/exercise";
 import { deleteTrainingDayExercise } from "@/model/TrainingDayExercise.model";
@@ -29,6 +33,7 @@ const TrainingDayExerciseFormElement = ({
   const [bodyparts, setBodyparts] = useState<Bodypart[]>([]);
   const [selectedBodypart, setSelectedBodypart] = useState<string>("");
   const [muscles, setMuscles] = useState<Muscle[]>([]);
+  const [selectedMuscles, setSelectedMuscles] = useState<string[]>([]);
   const form = useForm<z.infer<typeof TrainingDaySchema>>({
     resolver: zodResolver(TrainingDaySchema),
   });
@@ -54,6 +59,14 @@ const TrainingDayExerciseFormElement = ({
   };
   useEffect(() => {
     if (selectedBodypart) {
+      console.log(selectedBodypart);
+      const getExercisesByBodyPart = async () => {
+        console.log("wat");
+        const exercises = await getAllExercisesByBodyPart(
+          selectedBodypart as string
+        );
+        setExercises(exercises);
+      };
       const getMuscles = async () => {
         try {
           const muscles = await getAllMusclesByBodypart(
@@ -65,11 +78,44 @@ const TrainingDayExerciseFormElement = ({
         }
       };
       getMuscles();
+      getExercisesByBodyPart();
     } else {
+      setExercises([]);
       setMuscles([]);
     }
   }, [selectedBodypart]);
-
+  const handleMuscleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    var options = e.target.options;
+    var value: string[] = [];
+    for (var i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    setSelectedMuscles(value);
+  };
+  useEffect(() => {
+    if (selectedMuscles.length > 0 && selectedMuscles[0] != "") {
+      console.log("attempting to send muscles");
+      const getExercisesByMuscles = async () => {
+        const exercises = await getAllExercisesByMuscle(
+          selectedMuscles as string[]
+        );
+        setExercises(exercises);
+      };
+      getExercisesByMuscles();
+    } else {
+      if (selectedBodypart) {
+        const getExercisesByBodyPart = async () => {
+          const exercises = await getAllExercisesByBodyPart(
+            selectedBodypart as string
+          );
+          setExercises(exercises);
+        };
+        getExercisesByBodyPart();
+      }
+    }
+  }, [selectedMuscles]);
   function onSubmit(values: z.infer<typeof TrainingDaySchema>) {}
   return (
     <>
@@ -90,7 +136,11 @@ const TrainingDayExerciseFormElement = ({
         </div>
         <div className="flex flex-col">
           <label>Muscles</label>
-          <select name={`trainingdayexercises.${index}.muscle_id`}>
+          <select
+            onChange={handleMuscleChange}
+            multiple
+            name={`trainingdayexercises.${index}.muscle_id`}
+          >
             <option value="">Select a muscle</option>
             {muscles.map((muscle: Muscle, key) => (
               <option key={key} value={`${muscle.muscle_id}`}>
