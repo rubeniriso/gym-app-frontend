@@ -23,6 +23,12 @@ const Navbar = async () => {
               Routines
             </Link>
           )}
+          <Link
+            className={buttonVariants({ variant: "outline" })}
+            href={"/exercises"}
+          >
+            Exercises
+          </Link>
         </div>
         <div className="flex flex-row gap-4">
           <ThemeToggle />

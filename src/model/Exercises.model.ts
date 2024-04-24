@@ -35,7 +35,6 @@ async function getAllExercisesByMuscle(muscles: string[]) {
 }
 async function getAllExercisesByBodyPart(bodyPartId: string) {
   try {
-    console.log("yepper");
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/exercises/bodypart/${bodyPartId}`
     );
