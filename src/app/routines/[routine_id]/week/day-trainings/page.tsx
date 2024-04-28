@@ -6,18 +6,25 @@ import DeleteWeekThumbnail from "@/components/ui/weeks/DeleteWeekThumbnail";
 import { Week } from "@/types/week";
 import { getAllRotuineWeeks } from "@/model/Week.model";
 import WeekDataThumbnail from "@/components/ui/weeks/WeekDataThumbnail";
+import UpdateWeekThumbnail from "@/components/ui/weeks/UpdateWeekThumbnail";
 
 interface weekPageProps {
-  week_id: string;
-  routine_id: string;
+  params: {
+    routine_id: string;
+  };
+  searchParams: {
+    week_id: string;
+  };
 }
 
-const Page = async ({ params }: { params: weekPageProps }) => {
-  let weekId = params.week_id;
+const Page = async ({ params, searchParams }: weekPageProps) => {
+  let weekId;
   const routine_id = params.routine_id;
-  if (weekId === "default") {
+  if (searchParams.week_id == "") {
     const weeksList: Week[] = await getAllRotuineWeeks(routine_id);
     weekId = weeksList.length === 0 ? "" : weeksList[0].week_id;
+  } else {
+    weekId = searchParams.week_id;
   }
   const trainingDays: TrainingDay[] =
     weekId.length === 0 ? [] : await getAllWeekTrainingDays(weekId);
@@ -30,6 +37,7 @@ const Page = async ({ params }: { params: weekPageProps }) => {
           <AddTrainingDayThumbnail weekId={weekId} />
           <TrainingDayAccordion trainingDays={trainingDays} />
           <DeleteWeekThumbnail weekId={weekId} routine_id={routine_id} />
+          <UpdateWeekThumbnail weekId={weekId} />
         </>
       ) : (
         <></>

@@ -1,7 +1,7 @@
 "use client";
 import { deleteWeek } from "@/model/Week.model";
 import { Button } from "@/components/ui/button";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface DeleteWeekProps {
   weekId: string;
@@ -13,7 +13,6 @@ const DeleteWeekThumbnail = ({ weekId, routine_id }: DeleteWeekProps) => {
 
   const handleWeekDeletion = (weekId: string, routine_id: string) => {
     deleteWeek(weekId);
-    router.push(`/routines/${routine_id}/default/day-trainings`);
   };
 
   return (

@@ -13,6 +13,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -34,7 +36,10 @@ const layout = async ({ children, params }: LayoutProps) => {
               weeks.map((week: Week, index) => (
                 <PaginationItem>
                   <PaginationLink
-                    href={`/routines/${routineId}/${week.week_id}/day-trainings`}
+                    href={{
+                      pathname: `/routines/${routineId}/week/day-trainings`,
+                      query: { week_id: week.week_id },
+                    }}
                   >
                     {index + 1}
                   </PaginationLink>
