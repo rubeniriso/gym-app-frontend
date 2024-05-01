@@ -1,8 +1,4 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import RoutineThumbnail from "./RoutineThumbnail";
-import AddRoutineThumbnail from "./AddRoutineCard";
-import DialogComponent from "../dialog/DialogComponent";
 interface RoutinesContainerProps {
   children: React.ReactNode;
 }

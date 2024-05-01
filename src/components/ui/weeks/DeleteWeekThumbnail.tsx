@@ -1,17 +1,14 @@
 "use client";
 import { deleteWeek } from "@/model/Week.model";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 interface DeleteWeekProps {
   weekId: string;
   routine_id: string;
 }
 
-const DeleteWeekThumbnail = ({ weekId, routine_id }: DeleteWeekProps) => {
-  const router = useRouter();
-
-  const handleWeekDeletion = (weekId: string, routine_id: string) => {
+const DeleteWeekThumbnail = ({ weekId }: DeleteWeekProps) => {
+  const handleWeekDeletion = (weekId: string) => {
     deleteWeek(weekId);
   };
 
@@ -20,7 +17,7 @@ const DeleteWeekThumbnail = ({ weekId, routine_id }: DeleteWeekProps) => {
       className="mt-5"
       variant="destructive"
       type="button"
-      onClick={() => handleWeekDeletion(weekId, routine_id)}
+      onClick={() => handleWeekDeletion(weekId)}
     >
       Delete week
     </Button>

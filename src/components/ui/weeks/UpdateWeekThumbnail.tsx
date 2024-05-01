@@ -3,6 +3,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import WeekFormContent from "./WeekFormContent";
 import { useDialog } from "../../hooks/useDialog";
 import { updateWeek } from "@/model/Week.model";
+import UpdateWeekForm from "./UpdateWeekForm";
 interface UpdateWeekProps {
   weekId: string;
 }
@@ -12,7 +13,7 @@ const UpdateWeekThumbnail = ({ weekId }: UpdateWeekProps) => {
   const handleOpenDialog = () => {
     onOpen();
     setDialogContent(
-      <WeekFormContent
+      <UpdateWeekForm
         submit_id={weekId}
         title={"Update week"}
         submitFunction={updateWeek}

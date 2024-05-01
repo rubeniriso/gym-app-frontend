@@ -27,7 +27,7 @@ const Page = async ({ params, searchParams }: weekPageProps) => {
     weekId = searchParams.week_id;
   }
   const trainingDays: TrainingDay[] =
-    weekId.length === 0 ? [] : await getAllWeekTrainingDays(weekId);
+    weekId === "" ? [] : await getAllWeekTrainingDays(weekId);
 
   return (
     <>

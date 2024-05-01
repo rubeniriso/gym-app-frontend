@@ -33,7 +33,6 @@ async function createWeek(
   routineId: string,
   routine: z.infer<typeof newWeekData>
 ) {
-  console.log(routineId, routine);
   try {
     const response = await fetch(
       `${process.env.DOMAIN_URL}/api/v1/weeks/create/${routineId}`,
@@ -45,9 +44,10 @@ async function createWeek(
         body: JSON.stringify(routine),
       }
     );
+    const data = await response.json();
     revalidateTag("weeks");
+    redirect(`/routines/${routineId}/week/day-trainings?week_id=${data.week_id}`)
   } catch (error) {
-    console.log(error);
     console.error("Error fetching session data:", error);
     throw error;
   }
