@@ -1,19 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { TrainingDayExercise } from "@/types/data/TrainingDayExercise";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import {
-  getAllExercises,
   getAllExercisesByBodyPart,
   getAllExercisesByMuscle,
 } from "@/model/Exercises.model";
 import { Button } from "@/components/ui/button";
 import { Exercise } from "@/types/exercise";
 import { deleteTrainingDayExercise } from "@/model/TrainingDayExercise.model";
-import { ImSpinner9 } from "react-icons/im";
 import { getAllBodyParts } from "@/model/Bodypart.model";
 import { Bodypart } from "@/types/bodypart";
 import { Muscle } from "@/types/muscle";
@@ -34,9 +32,6 @@ const TrainingDayExerciseFormElement = ({
   const [selectedBodypart, setSelectedBodypart] = useState<string>("");
   const [muscles, setMuscles] = useState<Muscle[]>([]);
   const [selectedMuscles, setSelectedMuscles] = useState<string[]>([]);
-  const form = useForm<z.infer<typeof TrainingDaySchema>>({
-    resolver: zodResolver(TrainingDaySchema),
-  });
 
   const handleDeleteTrainingDayExercise = (trainingdayexercise_id: string) => {
     deleteTrainingDayExercise(trainingdayexercise_id);
@@ -59,7 +54,6 @@ const TrainingDayExerciseFormElement = ({
   };
   useEffect(() => {
     if (selectedBodypart) {
-      console.log(selectedBodypart);
       const getExercisesByBodyPart = async () => {
         console.log("wat");
         const exercises = await getAllExercisesByBodyPart(
@@ -116,7 +110,6 @@ const TrainingDayExerciseFormElement = ({
       }
     }
   }, [selectedMuscles]);
-  function onSubmit(values: z.infer<typeof TrainingDaySchema>) {}
   return (
     <>
       <div className="flex flex-row" key={index}>

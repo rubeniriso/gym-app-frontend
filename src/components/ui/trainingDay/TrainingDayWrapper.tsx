@@ -5,16 +5,17 @@ import AddTrainingDayExercise from "../routines/trainingdayexercise/AddTrainingD
 import TrainingDayExerciseForm from "../routines/trainingdayexercise/TrainingDayExerciseForm";
 import { useEffect, useState } from "react";
 import { getTrainingDayExercisesByTrainingDayId } from "@/model/TrainingDayExercise.model";
+import { Button } from "@/components/ui/button";
+import { deleteTrainingDay } from "@/model/TrainingDay.model";
+import UpdateTrainingDayThumbnail from "./UpdateTrainingDayThumbnail";
+import { TrainingDay } from "@/types/trainingDay";
 
 interface TrainingDayWrapperProps {
-  trainingday_id: string;
-  description: string;
+  trainingDay: TrainingDay;
 }
 
-const TrainingDayWrapper = ({
-  trainingday_id,
-  description,
-}: TrainingDayWrapperProps) => {
+const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
+  const trainingday_id = trainingDay.trainingday_id;
   const [trainingDayExercises, setTrainingDayExercises] = useState<
     TrainingDayExercise[]
   >([]);
@@ -26,7 +27,6 @@ const TrainingDayWrapper = ({
       try {
         const trainingDayExercises: TrainingDayExercise[] =
           await getTrainingDayExercisesByTrainingDayId(trainingday_id);
-
         setTrainingDayExercises(trainingDayExercises);
       } catch (error) {
         console.error("Error fetching exercises:", error);
@@ -42,6 +42,7 @@ const TrainingDayWrapper = ({
   return (
     <>
       <div className="flex flex-row items-center justify-center gap-3">
+        {trainingDay.description}
         <AddTrainingDayExercise
           trainingday_id={trainingday_id.toString()}
           onAddTrainingDayExercise={handleTrainingDayExercisesChange}
@@ -51,6 +52,15 @@ const TrainingDayWrapper = ({
         trainingDayExercises={trainingDayExercises}
         onDeleteTrainingDayExercise={handleTrainingDayExercisesChange}
       />
+      <Button
+        className="mt-5"
+        variant="destructive"
+        type="button"
+        onClick={() => deleteTrainingDay(trainingday_id)}
+      >
+        Delete training day
+      </Button>
+      <UpdateTrainingDayThumbnail trainingDay={trainingDay} />
     </>
   );
 };
