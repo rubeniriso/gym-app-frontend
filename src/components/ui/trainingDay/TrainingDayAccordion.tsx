@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Accordion,
   AccordionContent,
@@ -6,9 +5,6 @@ import {
   AccordionTrigger,
 } from "../accordion";
 import { TrainingDay } from "@/types/trainingDay";
-import TrainingDayExercise from "../routines/trainingdayexercise/TrainingDayExerciseCard";
-import AddTrainingDayExercise from "@/components/ui/routines/trainingdayexercise/AddTrainingDayExercise";
-import TrainingDayExerciseForm from "../routines/trainingdayexercise/TrainingDayExerciseForm";
 import TrainingDayWrapper from "./TrainingDayWrapper";
 
 interface TrainingDayAccordionProps {
@@ -23,10 +19,7 @@ const TrainingDayAccordion = ({ trainingDays }: TrainingDayAccordionProps) => {
           <AccordionItem key={index} value={trainingDay.name}>
             <AccordionTrigger>{trainingDay.name}</AccordionTrigger>
             <AccordionContent>
-              <TrainingDayWrapper
-                trainingday_id={trainingDay.trainingday_id.toString()}
-                description={trainingDay.description}
-              />
+              <TrainingDayWrapper trainingDay={trainingDay} />
             </AccordionContent>
           </AccordionItem>
         ))}

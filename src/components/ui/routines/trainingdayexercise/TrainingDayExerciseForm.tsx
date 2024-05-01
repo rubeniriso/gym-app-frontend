@@ -1,19 +1,9 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import { TrainingDayExercise } from "@/types/data/TrainingDayExercise";
 import { Form, useForm } from "react-hook-form";
 import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { getAllExercises } from "@/model/Exercises.model";
-import { Button } from "@/components/ui/button";
-import { Exercise } from "@/types/exercise";
-import { deleteTrainingDayExercise } from "@/model/TrainingDayExercise.model";
-import { ImSpinner9 } from "react-icons/im";
-import { getAllBodyParts } from "@/model/Bodypart.model";
-import { Bodypart } from "@/types/bodypart";
-import { Muscle } from "@/types/muscle";
-import { getAllMusclesByBodypart } from "@/model/Muscle.model";
 import TrainingDayExerciseFormElement from "./TrainingDayExerciseFormElement";
 
 interface TrainingDayExerciseFormProps {
@@ -27,7 +17,9 @@ const TrainingDayExerciseForm = ({
   const form = useForm<z.infer<typeof TrainingDaySchema>>({
     resolver: zodResolver(TrainingDaySchema),
   });
-  function onSubmit(values: z.infer<typeof TrainingDaySchema>) {}
+  function onSubmit(values: z.infer<typeof TrainingDaySchema>) {
+    console.log(values);
+  }
   return (
     <>
       {trainingDayExercises.length != 0 ? (
