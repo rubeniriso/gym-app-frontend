@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["clipground.com", "images.vexels.com", "webstockreview.net"],
+    domains: [
+      "clipground.com",
+      "images.vexels.com",
+      "webstockreview.net",
+      "www.inspireusafoundation.org",
+    ],
     remotePatterns: [
       {
         protocol: "https",
