@@ -1,10 +1,22 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { TrainingDayExercise } from "@/types/data/TrainingDayExercise";
-import { useForm } from "react-hook-form";
-import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 import {
   getAllExercisesByBodyPart,
   getAllExercisesByMuscle,
@@ -21,11 +33,13 @@ interface TrainingDayExerciseFormElementProps {
   trainingDayExercise: TrainingDayExercise;
   onDeleteTrainingDayExercise: () => void;
   index: number;
+  form: any;
 }
 const TrainingDayExerciseFormElement = ({
   trainingDayExercise,
   onDeleteTrainingDayExercise,
   index,
+  form,
 }: TrainingDayExerciseFormElementProps) => {
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [bodyparts, setBodyparts] = useState<Bodypart[]>([]);
@@ -47,15 +61,15 @@ const TrainingDayExerciseFormElement = ({
       }
     };
     getBodyparts();
+    // Add to the form submit the identifier of the trainingDayExercise.
+    form.setValue(
+      `exerciseData.${index}.trainingDayExerciseId`,
+      trainingDayExercise.trainingdayexercise_id
+    );
   }, []);
-  const handleBodypartChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedPart: string = e.target.value;
-    setSelectedBodypart(selectedPart);
-  };
   useEffect(() => {
     if (selectedBodypart) {
       const getExercisesByBodyPart = async () => {
-        console.log("wat");
         const exercises = await getAllExercisesByBodyPart(
           selectedBodypart as string
         );
@@ -78,19 +92,20 @@ const TrainingDayExerciseFormElement = ({
       setMuscles([]);
     }
   }, [selectedBodypart]);
-  const handleMuscleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    var options = e.target.options;
+  const handleMuscleChange = (muscle: string, field: any) => {
+    field.onChange(muscle);
+
     var value: string[] = [];
-    for (var i = 0, l = options.length; i < l; i++) {
-      if (options[i].selected) {
-        value.push(options[i].value);
-      }
-    }
+    // for (var i = 0, l = options.length; i < l; i++) {
+    //   if (options[i].selected) {
+    //     value.push(options[i].value);
+    //   }
+    // }
+    value.push(muscle);
     setSelectedMuscles(value);
   };
   useEffect(() => {
     if (selectedMuscles.length > 0 && selectedMuscles[0] != "") {
-      console.log("attempting to send muscles");
       const getExercisesByMuscles = async () => {
         const exercises = await getAllExercisesByMuscle(
           selectedMuscles as string[]
@@ -110,84 +125,167 @@ const TrainingDayExerciseFormElement = ({
       }
     }
   }, [selectedMuscles]);
-  return (
-    <>
-      <div className="flex flex-row" key={index}>
-        <div className="flex flex-col">
-          <label>Body part</label>
-          <select
-            name={`trainingdayexercises.${index}.bodypart_id`}
-            onChange={handleBodypartChange}
-          >
-            <option value="">Select a body part</option>
-            {bodyparts.map((bodypart: Bodypart, key) => (
-              <option key={key} value={`${bodypart.bodypart_id}`}>
-                {bodypart.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label>Muscles</label>
-          <select
-            onChange={handleMuscleChange}
-            multiple
-            name={`trainingdayexercises.${index}.muscle_id`}
-          >
-            <option value="">Select a muscle</option>
-            {muscles.map((muscle: Muscle, key) => (
-              <option key={key} value={`${muscle.muscle_id}`}>
-                {muscle.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label>Exercise</label>
-          <select>
-            <option value="">Select an exercise</option>
-            {exercises.map((exercise: Exercise, key) => (
-              <option
-                key={key}
-                value={`trainingdayexercises.${index}.exercise_id`}
-              >
-                {exercise.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor={`trainingdayexercises.${index}.sets`}>Sets:</label>
 
-          <input
-            name={`trainingdayexercises.${index}.sets`}
-            type="number"
-            value={trainingDayExercise.sets}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor={`trainingdayexercises.${index}.reps`}>Reps:</label>
-          <input
-            name={`trainingdayexercises.${index}.reps`}
-            type="number"
-            value={trainingDayExercise.reps}
-          />
-        </div>
-        <div className="flex flex-col">
-          <Button
-            variant="destructive"
-            type="button"
-            onClick={() =>
-              handleDeleteTrainingDayExercise(
-                trainingDayExercise.trainingdayexercise_id
-              )
-            }
-          >
-            Delete
-          </Button>
-        </div>
-      </div>
-    </>
+  return (
+    <div className="space-x-2 flex flex-wrap ">
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.trainingDayExerciseId`}
+        render={({ field }) => (
+          <FormItem className="hidden">
+            <FormControl>
+              <Input {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.bodyPart`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>BodyPart</FormLabel>
+            <Select
+              onValueChange={(event) => {
+                field.onChange(event);
+                setSelectedBodypart(event);
+              }}
+              defaultValue={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select the body part" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {bodyparts.map((bodypart: Bodypart, key) => (
+                  <SelectItem key={key} value={bodypart.bodypart_id}>
+                    {bodypart.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.muscle`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Muscles</FormLabel>
+            <Select
+              onValueChange={(event) => handleMuscleChange(event, field)}
+              value={field.value}
+            >
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select the muscle" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {muscles.map((muscle: Muscle, key) => (
+                  <SelectItem key={key} value={muscle.muscle_id}>
+                    {muscle.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.exercise`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Exercise</FormLabel>
+            <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <FormControl>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select the exercise" />
+                </SelectTrigger>
+              </FormControl>
+              <SelectContent>
+                {exercises.map((exercise: Exercise, key) => (
+                  <SelectItem key={key} value={`${exercise.exercise_id}`}>
+                    {exercise.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.sets`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Sets:</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="sets" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.reps`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Reps:</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="reps" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.weight`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Weight:</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="reps" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
+        name={`exerciseData.${index}.rir`}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Rir:</FormLabel>
+            <FormControl>
+              <Input type="number" placeholder="rir" {...field} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <Button
+        className="mt-auto"
+        variant="destructive"
+        type="button"
+        onClick={() =>
+          handleDeleteTrainingDayExercise(
+            trainingDayExercise.trainingdayexercise_id
+          )
+        }
+      >
+        Delete
+      </Button>
+    </div>
   );
 };
 

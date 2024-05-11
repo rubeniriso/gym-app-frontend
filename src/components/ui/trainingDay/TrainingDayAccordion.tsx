@@ -17,7 +17,9 @@ const TrainingDayAccordion = ({ trainingDays }: TrainingDayAccordionProps) => {
       {trainingDays &&
         trainingDays.map((trainingDay: TrainingDay, index) => (
           <AccordionItem key={index} value={trainingDay.name}>
-            <AccordionTrigger>{trainingDay.name}</AccordionTrigger>
+            <AccordionTrigger>
+              Training day name: {trainingDay.name}
+            </AccordionTrigger>
             <AccordionContent>
               <TrainingDayWrapper trainingDay={trainingDay} />
             </AccordionContent>
