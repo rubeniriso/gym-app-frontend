@@ -44,8 +44,6 @@ const TrainingDayExerciseFormElement = ({
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [bodyparts, setBodyparts] = useState<Bodypart[]>([]);
   const [selectedBodypart, setSelectedBodypart] = useState<string>("");
-  const [muscles, setMuscles] = useState<Muscle[]>([]);
-  const [selectedMuscles, setSelectedMuscles] = useState<string[]>([]);
 
   const handleDeleteTrainingDayExercise = (trainingdayexercise_id: string) => {
     deleteTrainingDayExercise(trainingdayexercise_id);
@@ -56,6 +54,9 @@ const TrainingDayExerciseFormElement = ({
       try {
         const bodyparts: Bodypart[] = await getAllBodyParts();
         setBodyparts(bodyparts);
+        if (trainingDayExercise.bodypart_id) {
+          setSelectedBodypart(trainingDayExercise.bodypart_id);
+        }
       } catch (error) {
         console.log("Error fetching bodyparts:", error);
       }
@@ -73,58 +74,14 @@ const TrainingDayExerciseFormElement = ({
         const exercises = await getAllExercisesByBodyPart(
           selectedBodypart as string
         );
+        console.log(exercises);
         setExercises(exercises);
       };
-      const getMuscles = async () => {
-        try {
-          const muscles = await getAllMusclesByBodypart(
-            selectedBodypart as string
-          );
-          setMuscles(muscles);
-        } catch (error) {
-          console.log("Error fetching muscles, error");
-        }
-      };
-      getMuscles();
       getExercisesByBodyPart();
     } else {
       setExercises([]);
-      setMuscles([]);
     }
   }, [selectedBodypart]);
-  const handleMuscleChange = (muscle: string, field: any) => {
-    field.onChange(muscle);
-
-    var value: string[] = [];
-    // for (var i = 0, l = options.length; i < l; i++) {
-    //   if (options[i].selected) {
-    //     value.push(options[i].value);
-    //   }
-    // }
-    value.push(muscle);
-    setSelectedMuscles(value);
-  };
-  useEffect(() => {
-    if (selectedMuscles.length > 0 && selectedMuscles[0] != "") {
-      const getExercisesByMuscles = async () => {
-        const exercises = await getAllExercisesByMuscle(
-          selectedMuscles as string[]
-        );
-        setExercises(exercises);
-      };
-      getExercisesByMuscles();
-    } else {
-      if (selectedBodypart) {
-        const getExercisesByBodyPart = async () => {
-          const exercises = await getAllExercisesByBodyPart(
-            selectedBodypart as string
-          );
-          setExercises(exercises);
-        };
-        getExercisesByBodyPart();
-      }
-    }
-  }, [selectedMuscles]);
 
   return (
     <div className="space-x-2 flex flex-wrap ">
@@ -143,6 +100,7 @@ const TrainingDayExerciseFormElement = ({
       <FormField
         control={form.control}
         name={`exerciseData.${index}.bodyPart`}
+        defaultValue={trainingDayExercise.bodypart_id}
         render={({ field }) => (
           <FormItem>
             <FormLabel>BodyPart</FormLabel>
@@ -151,7 +109,7 @@ const TrainingDayExerciseFormElement = ({
                 field.onChange(event);
                 setSelectedBodypart(event);
               }}
-              defaultValue={field.value}
+              defaultValue={trainingDayExercise.bodypart_id}
             >
               <FormControl>
                 <SelectTrigger>
@@ -172,38 +130,15 @@ const TrainingDayExerciseFormElement = ({
       />
       <FormField
         control={form.control}
-        name={`exerciseData.${index}.muscle`}
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel>Muscles</FormLabel>
-            <Select
-              onValueChange={(event) => handleMuscleChange(event, field)}
-              value={field.value}
-            >
-              <FormControl>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select the muscle" />
-                </SelectTrigger>
-              </FormControl>
-              <SelectContent>
-                {muscles.map((muscle: Muscle, key) => (
-                  <SelectItem key={key} value={muscle.muscle_id}>
-                    {muscle.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
-      <FormField
-        control={form.control}
         name={`exerciseData.${index}.exercise`}
+        defaultValue={trainingDayExercise.exercise_id}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Exercise</FormLabel>
-            <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <Select
+              defaultValue={trainingDayExercise.exercise_id}
+              onValueChange={field.onChange}
+            >
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Select the exercise" />
@@ -224,6 +159,7 @@ const TrainingDayExerciseFormElement = ({
       <FormField
         control={form.control}
         name={`exerciseData.${index}.sets`}
+        defaultValue={trainingDayExercise.sets}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Sets:</FormLabel>
@@ -237,6 +173,7 @@ const TrainingDayExerciseFormElement = ({
       <FormField
         control={form.control}
         name={`exerciseData.${index}.reps`}
+        defaultValue={trainingDayExercise.reps}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Reps:</FormLabel>
@@ -250,6 +187,7 @@ const TrainingDayExerciseFormElement = ({
       <FormField
         control={form.control}
         name={`exerciseData.${index}.weight`}
+        defaultValue={trainingDayExercise.weight}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Weight:</FormLabel>
@@ -263,6 +201,7 @@ const TrainingDayExerciseFormElement = ({
       <FormField
         control={form.control}
         name={`exerciseData.${index}.rir`}
+        defaultValue={trainingDayExercise.rir}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Rir:</FormLabel>

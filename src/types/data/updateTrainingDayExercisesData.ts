@@ -7,9 +7,6 @@ export const FormSchema = z.object({
       bodyPart: z.string({
         required_error: "Please select a body part.",
       }),
-      muscle: z.string({
-        required_error: "Please select a muscle.",
-      }),
       exercise: z.string({
         required_error: "Please select a exercise",
       }),

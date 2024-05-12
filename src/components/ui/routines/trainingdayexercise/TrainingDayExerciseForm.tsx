@@ -15,17 +15,6 @@ interface TrainingDayExerciseFormProps {
   trainingday_id: string;
 }
 
-const defaultFormValues = {
-  exerciseData: [
-    {
-      sets: 1,
-      reps: 1,
-      weight: 1,
-      rir: 0,
-    },
-  ],
-};
-
 const TrainingDayExerciseForm = ({
   trainingDayExercises,
   onDeleteTrainingDayExercise,
@@ -33,7 +22,6 @@ const TrainingDayExerciseForm = ({
 }: TrainingDayExerciseFormProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: defaultFormValues,
   });
   function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
