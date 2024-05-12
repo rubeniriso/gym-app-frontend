@@ -9,6 +9,8 @@ export type TrainingDayExercise = {
   trainingdayexercise_id: string;
   exercise_id: string;
   exerciseName: string;
+  bodypart_id?: string;
+  muscle_id?: string;
   reps: number;
   /** Description of the TrainingDay */
   description: string;

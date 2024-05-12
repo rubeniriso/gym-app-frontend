@@ -1,30 +1,38 @@
 "use client";
 import { TrainingDayExercise } from "@/types/data/TrainingDayExercise";
-import { Form, useForm } from "react-hook-form";
-import { TrainingDaySchema } from "@/types/data/trainingDaySchema";
+import { useForm } from "react-hook-form";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import TrainingDayExerciseFormElement from "./TrainingDayExerciseFormElement";
+import { Button } from "@/components/ui/button";
+import { FormSchema } from "@/types/data/updateTrainingDayExercisesData";
+import { updateTrainingDayExercises } from "@/model/TrainingDay.model";
 
 interface TrainingDayExerciseFormProps {
   trainingDayExercises: TrainingDayExercise[];
   onDeleteTrainingDayExercise: () => void;
+  trainingday_id: string;
 }
+
 const TrainingDayExerciseForm = ({
   trainingDayExercises,
   onDeleteTrainingDayExercise,
+  trainingday_id,
 }: TrainingDayExerciseFormProps) => {
-  const form = useForm<z.infer<typeof TrainingDaySchema>>({
-    resolver: zodResolver(TrainingDaySchema),
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
   });
-  function onSubmit(values: z.infer<typeof TrainingDaySchema>) {
+  function onSubmit(values: z.infer<typeof FormSchema>) {
     console.log(values);
+    updateTrainingDayExercises(trainingday_id, values);
+    //TODO: Send all this data to a new endpoint in charge of persisting it in the database.
   }
   return (
     <>
       {trainingDayExercises.length != 0 ? (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3">
             {trainingDayExercises &&
               trainingDayExercises.map(
                 (trainingDayExercise: TrainingDayExercise, index: number) => (
@@ -33,9 +41,11 @@ const TrainingDayExerciseForm = ({
                     trainingDayExercise={trainingDayExercise}
                     index={index}
                     onDeleteTrainingDayExercise={onDeleteTrainingDayExercise}
+                    form={form}
                   />
                 )
               )}
+            <Button type="submit">Save</Button>
           </form>
         </Form>
       ) : (

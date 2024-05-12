@@ -20,6 +20,19 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
     TrainingDayExercise[]
   >([]);
 
+  const handleTrainingDayExerciseUpdate = (
+    trainingDayExercise: TrainingDayExercise
+  ) => {
+    setTrainingDayExercises((prevExercises) =>
+      prevExercises.map((exercise) =>
+        exercise.trainingdayexercise_id ===
+        trainingDayExercise.trainingdayexercise_id
+          ? trainingDayExercise
+          : exercise
+      )
+    );
+  };
+
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
@@ -41,14 +54,15 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
 
   return (
     <>
+      Training Day description: {trainingDay.description}
       <div className="flex flex-row items-center justify-center gap-3">
-        {trainingDay.description}
         <AddTrainingDayExercise
           trainingday_id={trainingday_id.toString()}
           onAddTrainingDayExercise={handleTrainingDayExercisesChange}
         />
       </div>
       <TrainingDayExerciseForm
+        trainingday_id={trainingday_id}
         trainingDayExercises={trainingDayExercises}
         onDeleteTrainingDayExercise={handleTrainingDayExercisesChange}
       />
