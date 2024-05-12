@@ -62,6 +62,7 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
         />
       </div>
       <TrainingDayExerciseForm
+        trainingday_id={trainingday_id}
         trainingDayExercises={trainingDayExercises}
         onDeleteTrainingDayExercise={handleTrainingDayExercisesChange}
       />

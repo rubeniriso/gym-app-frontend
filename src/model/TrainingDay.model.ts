@@ -3,6 +3,7 @@ import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { newtrainingDayData } from "@/types/data/NewTrainingDayData";
 import { redirect } from "next/navigation";
+import { FormSchema } from "@/types/data/updateTrainingDayExercisesData";
 
 async function getAllSessions() {
   try {
@@ -46,6 +47,7 @@ async function createTrainingDay(
         body: JSON.stringify(trainingDay),
       }
     );
+    console.log(response);
     revalidateTag("trainingDay");
   } catch (error) {
     console.log(error);
@@ -54,28 +56,59 @@ async function createTrainingDay(
   }
 }
 
-async function updateTrainingDay(trainingday_id: string, trainingDay: z.infer<typeof newtrainingDayData>) {
+async function updateTrainingDay(
+  trainingday_id: string,
+  trainingDay: z.infer<typeof newtrainingDayData>
+) {
   try {
     await fetch(
-      `${process.env.DOMAIN_URL}/api/v1/trainingDays/update/${trainingday_id}`, {
-      method: "PUT", headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(trainingDay)
-    }
+      `${process.env.DOMAIN_URL}/api/v1/trainingDays/update/${trainingday_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(trainingDay),
+      }
     );
+
     revalidateTag("trainingDay");
   } catch (error) {
-    console.error("Error updating week: ", error)
+    console.error("Error updating week: ", error);
+    throw error;
+  }
+}
+async function updateTrainingDayExercises(
+  trainingday_id: string,
+  trainingDay: z.infer<typeof FormSchema>
+) {
+  try {
+    const response = await fetch(
+      `${process.env.DOMAIN_URL}/api/v1/trainingDays/update/exercises/${trainingday_id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(trainingDay),
+      }
+    );
+    console.log(response);
+    revalidateTag("trainingDay");
+  } catch (error) {
+    console.error("Error updating week: ", error);
     throw error;
   }
 }
 
 async function deleteTrainingDay(trainingday_id: string) {
   try {
-    console.log(`${process.env.DOMAIN_URL}/api/v1/trainingDays/${trainingday_id}`)
+    console.log(
+      `${process.env.DOMAIN_URL}/api/v1/trainingDays/${trainingday_id}`
+    );
     const response = await fetch(
-      `${process.env.DOMAIN_URL}/api/v1/trainingDays/${trainingday_id}`, { method: "DELETE" }
+      `${process.env.DOMAIN_URL}/api/v1/trainingDays/${trainingday_id}`,
+      { method: "DELETE" }
     );
     const data = await response.json();
     revalidateTag("trainingDay");
@@ -86,4 +119,11 @@ async function deleteTrainingDay(trainingday_id: string) {
 }
 
 // Export the function
-export { getAllSessions, getAllWeekTrainingDays, createTrainingDay, updateTrainingDay, deleteTrainingDay };
+export {
+  getAllSessions,
+  getAllWeekTrainingDays,
+  createTrainingDay,
+  updateTrainingDay,
+  deleteTrainingDay,
+  updateTrainingDayExercises,
+};

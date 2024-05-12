@@ -6,40 +6,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import TrainingDayExerciseFormElement from "./TrainingDayExerciseFormElement";
 import { Button } from "@/components/ui/button";
+import { FormSchema } from "@/types/data/updateTrainingDayExercisesData";
+import { updateTrainingDayExercises } from "@/model/TrainingDay.model";
 
 interface TrainingDayExerciseFormProps {
   trainingDayExercises: TrainingDayExercise[];
   onDeleteTrainingDayExercise: () => void;
+  trainingday_id: string;
 }
-
-const FormSchema = z.object({
-  exerciseData: z.array(
-    z.object({
-      trainingDayExerciseId: z.string(),
-      bodyPart: z.string({
-        required_error: "Please select a body part.",
-      }),
-      muscle: z.string({
-        required_error: "Please select a muscle.",
-      }),
-      exercise: z.string({
-        required_error: "Please select a exercise",
-      }),
-      sets: z.coerce.number({
-        required_error: "Please introduce the number of sets",
-      }),
-      reps: z.coerce.number({
-        required_error: "Please introduce the number of reps",
-      }),
-      weight: z.coerce.number({
-        required_error: "Please introduce the weight",
-      }),
-      rir: z.coerce.number({
-        required_error: "Please introduce the rir",
-      }),
-    })
-  ),
-});
 
 const defaultFormValues = {
   exerciseData: [
@@ -52,20 +26,20 @@ const defaultFormValues = {
   ],
 };
 
-function onSubmit(values: z.infer<typeof FormSchema>) {
-  console.log(values);
-  //TODO: Send all this data to a new endpoint in charge of persisting it in the database.
-}
-
 const TrainingDayExerciseForm = ({
   trainingDayExercises,
   onDeleteTrainingDayExercise,
+  trainingday_id,
 }: TrainingDayExerciseFormProps) => {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: defaultFormValues,
   });
-
+  function onSubmit(values: z.infer<typeof FormSchema>) {
+    console.log(values);
+    updateTrainingDayExercises(trainingday_id, values);
+    //TODO: Send all this data to a new endpoint in charge of persisting it in the database.
+  }
   return (
     <>
       {trainingDayExercises.length != 0 ? (
