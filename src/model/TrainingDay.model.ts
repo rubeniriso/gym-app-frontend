@@ -47,7 +47,6 @@ async function createTrainingDay(
         body: JSON.stringify(trainingDay),
       }
     );
-    console.log(response);
     revalidateTag("trainingDay");
   } catch (error) {
     console.log(error);
