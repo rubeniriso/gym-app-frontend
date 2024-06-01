@@ -74,7 +74,6 @@ const TrainingDayExerciseFormElement = ({
         const exercises = await getAllExercisesByBodyPart(
           selectedBodypart as string
         );
-        console.log(exercises);
         setExercises(exercises);
       };
       getExercisesByBodyPart();
@@ -82,9 +81,8 @@ const TrainingDayExerciseFormElement = ({
       setExercises([]);
     }
   }, [selectedBodypart]);
-
   return (
-    <div className="space-x-2 flex flex-wrap ">
+    <div className="grid grid-cols-8 gap-4 items-center bg-gray-100 p-4 rounded-lg shadow-sm">
       <FormField
         control={form.control}
         name={`exerciseData.${index}.trainingDayExerciseId`}
@@ -102,8 +100,8 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.bodyPart`}
         defaultValue={trainingDayExercise.bodypart_id}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>BodyPart</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">BodyPart</FormLabel>
             <Select
               onValueChange={(event) => {
                 field.onChange(event);
@@ -113,11 +111,11 @@ const TrainingDayExerciseFormElement = ({
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select the body part" />
+                  <SelectValue placeholder="Select" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {bodyparts.map((bodypart: Bodypart, key) => (
+                {bodyparts.map((bodypart, key) => (
                   <SelectItem key={key} value={bodypart.bodypart_id}>
                     {bodypart.name}
                   </SelectItem>
@@ -133,19 +131,19 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.exercise`}
         defaultValue={trainingDayExercise.exercise_id}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Exercise</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">Exercise</FormLabel>
             <Select
               defaultValue={trainingDayExercise.exercise_id}
               onValueChange={field.onChange}
             >
               <FormControl>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select the exercise" />
+                  <SelectValue placeholder="Select" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {exercises.map((exercise: Exercise, key) => (
+                {exercises.map((exercise, key) => (
                   <SelectItem key={key} value={`${exercise.exercise_id}`}>
                     {exercise.name}
                   </SelectItem>
@@ -161,10 +159,10 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.sets`}
         defaultValue={trainingDayExercise.sets}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Sets:</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">Sets</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="sets" {...field} />
+              <Input type="number" placeholder="Sets" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -175,10 +173,10 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.reps`}
         defaultValue={trainingDayExercise.reps}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Reps:</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">Reps</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="reps" {...field} />
+              <Input type="number" placeholder="Reps" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -189,10 +187,10 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.weight`}
         defaultValue={trainingDayExercise.weight}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Weight:</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">Weight</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="reps" {...field} />
+              <Input type="number" placeholder="Weight" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -203,17 +201,17 @@ const TrainingDayExerciseFormElement = ({
         name={`exerciseData.${index}.rir`}
         defaultValue={trainingDayExercise.rir}
         render={({ field }) => (
-          <FormItem>
-            <FormLabel>Rir:</FormLabel>
+          <FormItem className="col-span-1">
+            <FormLabel className="font-semibold">Rir</FormLabel>
             <FormControl>
-              <Input type="number" placeholder="rir" {...field} />
+              <Input type="number" placeholder="Rir" {...field} />
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
       <Button
-        className="mt-auto"
+        className="col-span-1 bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition duration-200"
         variant="destructive"
         type="button"
         onClick={() =>

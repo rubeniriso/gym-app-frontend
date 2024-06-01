@@ -28,21 +28,22 @@ const Page = async ({ params, searchParams }: weekPageProps) => {
   }
   const trainingDays: TrainingDay[] =
     weekId === "" ? [] : await getAllWeekTrainingDays(weekId);
-
   return (
-    <>
+    <div className="font-inter bg-white p-6 rounded-lg shadow-lg space-y-4">
       {weekId.length !== 0 ? (
         <>
           <WeekDataThumbnail weekId={weekId} />
           <AddTrainingDayThumbnail weekId={weekId} />
           <TrainingDayAccordion trainingDays={trainingDays} />
-          <DeleteWeekThumbnail weekId={weekId} routine_id={routine_id} />
-          <UpdateWeekThumbnail weekId={weekId} />
+          <div className="flex justify-between items-center">
+            <UpdateWeekThumbnail weekId={weekId} />
+            <DeleteWeekThumbnail weekId={weekId} routine_id={routine_id} />
+          </div>
         </>
       ) : (
         <></>
       )}
-    </>
+    </div>
   );
 };
 

@@ -24,7 +24,6 @@ const AddWeekThumbnail = ({ routineId }: AddWeekProps) => {
       onClick={handleOpenDialog}
       className="text-black rounded-sm px-4 py-2 justify-between flex flex-row items-center bg-slate-200"
     >
-      <AddCircleOutlineIcon />
       Add week
     </button>
   );

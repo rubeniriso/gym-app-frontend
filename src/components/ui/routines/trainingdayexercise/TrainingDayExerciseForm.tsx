@@ -24,7 +24,6 @@ const TrainingDayExerciseForm = ({
     resolver: zodResolver(FormSchema),
   });
   function onSubmit(values: z.infer<typeof FormSchema>) {
-    console.log(values);
     updateTrainingDayExercises(trainingday_id, values);
     //TODO: Send all this data to a new endpoint in charge of persisting it in the database.
   }
@@ -32,20 +31,26 @@ const TrainingDayExerciseForm = ({
     <>
       {trainingDayExercises.length != 0 ? (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-3">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="mt-6 space-y-4"
+          >
             {trainingDayExercises &&
-              trainingDayExercises.map(
-                (trainingDayExercise: TrainingDayExercise, index: number) => (
-                  <TrainingDayExerciseFormElement
-                    key={index}
-                    trainingDayExercise={trainingDayExercise}
-                    index={index}
-                    onDeleteTrainingDayExercise={onDeleteTrainingDayExercise}
-                    form={form}
-                  />
-                )
-              )}
-            <Button type="submit">Save</Button>
+              trainingDayExercises.map((trainingDayExercise, index) => (
+                <TrainingDayExerciseFormElement
+                  key={index}
+                  trainingDayExercise={trainingDayExercise}
+                  index={index}
+                  onDeleteTrainingDayExercise={onDeleteTrainingDayExercise}
+                  form={form}
+                />
+              ))}
+            <Button
+              type="submit"
+              className="w-auto bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+            >
+              Save
+            </Button>
           </form>
         </Form>
       ) : (

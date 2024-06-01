@@ -14,7 +14,6 @@ async function getTrainingDayExercisesByTrainingDayId(trainingDayId: string) {
       }
     );
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching training days for given week:", error);

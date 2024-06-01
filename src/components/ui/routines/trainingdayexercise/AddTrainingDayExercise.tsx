@@ -24,7 +24,6 @@ const AddTrainingDayExercise = ({
     resolver: zodResolver(newTrainingDayExerciseData),
   });
   function onSubmit(values: z.infer<typeof newTrainingDayExerciseData>) {
-    console.log("Creating empty exercise");
     createEmptyTrainingDayExercise(trainingday_id);
     onAddTrainingDayExercise();
   }
@@ -33,10 +32,7 @@ const AddTrainingDayExercise = ({
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <div className="flex flex-row items-center justify-center">
-            <Button type="submit">
-              <AddCircleOutlineIcon />
-              Add Exercise
-            </Button>
+            <Button type="submit">Add Exercise</Button>
           </div>
         </form>
       </Form>

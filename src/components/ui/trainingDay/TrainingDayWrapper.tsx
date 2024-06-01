@@ -20,19 +20,6 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
     TrainingDayExercise[]
   >([]);
 
-  const handleTrainingDayExerciseUpdate = (
-    trainingDayExercise: TrainingDayExercise
-  ) => {
-    setTrainingDayExercises((prevExercises) =>
-      prevExercises.map((exercise) =>
-        exercise.trainingdayexercise_id ===
-        trainingDayExercise.trainingdayexercise_id
-          ? trainingDayExercise
-          : exercise
-      )
-    );
-  };
-
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
@@ -40,6 +27,7 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
       try {
         const trainingDayExercises: TrainingDayExercise[] =
           await getTrainingDayExercisesByTrainingDayId(trainingday_id);
+        console.log("Training day identifier: ", trainingday_id);
         setTrainingDayExercises(trainingDayExercises);
       } catch (error) {
         console.error("Error fetching exercises:", error);
@@ -53,8 +41,11 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
   };
 
   return (
-    <>
-      Training Day description: {trainingDay.description}
+    <div className="font-inter bg-white p-6 rounded-lg shadow-lg space-y-4">
+      <div className="text-gray-600 text-base">
+        <span className="font-medium">Description:</span>{" "}
+        {trainingDay.description}
+      </div>
       <div className="flex flex-row items-center justify-center gap-3">
         <AddTrainingDayExercise
           trainingday_id={trainingday_id.toString()}
@@ -66,16 +57,18 @@ const TrainingDayWrapper = ({ trainingDay }: TrainingDayWrapperProps) => {
         trainingDayExercises={trainingDayExercises}
         onDeleteTrainingDayExercise={handleTrainingDayExercisesChange}
       />
-      <Button
-        className="mt-5"
-        variant="destructive"
-        type="button"
-        onClick={() => deleteTrainingDay(trainingday_id)}
-      >
-        Delete training day
-      </Button>
-      <UpdateTrainingDayThumbnail trainingDay={trainingDay} />
-    </>
+      <div className="flex justify-between mt-5">
+        <UpdateTrainingDayThumbnail trainingDay={trainingDay} />
+        <Button
+          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200"
+          variant="destructive"
+          type="button"
+          onClick={() => deleteTrainingDay(trainingday_id)}
+        >
+          Delete training day
+        </Button>
+      </div>
+    </div>
   );
 };
 

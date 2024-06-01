@@ -3,6 +3,7 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import TrainingDayFormContent from "./TrainingDayFormContent";
 import { useDialog } from "../../hooks/useDialog";
 import { createTrainingDay } from "@/model/TrainingDay.model";
+import { Button } from "@/components/ui/button";
 interface AddTrainingDayProps {
   weekId: string;
 }
@@ -19,15 +20,7 @@ const AddTrainingDayThumbnail = ({ weekId }: AddTrainingDayProps) => {
       />
     );
   };
-  return (
-    <button
-      onClick={handleOpenDialog}
-      className="text-black rounded-sm px-4 py-2 justify-between flex flex-row items-center bg-slate-200"
-    >
-      <AddCircleOutlineIcon />
-      Add Training Day
-    </button>
-  );
+  return <Button onClick={handleOpenDialog}>Add Training Day</Button>;
 };
 
 export default AddTrainingDayThumbnail;
